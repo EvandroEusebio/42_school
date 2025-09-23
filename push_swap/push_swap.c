@@ -563,6 +563,8 @@ int cust_checker(List *stack_A, List *stack_B)
     return (value_choosed);
 }
 
+
+
 // verify if list is sorted
 int is_sorted(List stack)
 {
@@ -587,6 +589,27 @@ int is_sorted(List stack)
     return (1);
 }
 
+// sorted for list with tree elements
+void sorted_tree_elements(List *stack)
+{
+    int minor_value;
+    int max_value;
+
+    minor_value = find_min_value(*stack);
+    max_value = find_max_value(*stack);
+    if (minor_value == stack->begin->v && max_value == stack->begin->next->v)
+    {
+        swap_A(stack);
+        rotate(stack, 'a');
+    }
+    else if(minor_value == stack->last->v && max_value == stack->begin->next->v)
+        reverse_rotate(stack, 'a');
+    else if (max_value == stack->last->v && minor_value == stack->begin->next->v)
+        swap_A(stack);
+    else
+        rotate(stack, 'a');
+}
+
 int main(int n_args, char **args)
 {
     List stack_A;
@@ -599,26 +622,14 @@ int main(int n_args, char **args)
         show_error();
 
     is_sorted(stack_A);
-    push_B(&stack_A, &stack_B);
-    push_B(&stack_A, &stack_B);
-    swap_B(&stack_B);
-    push_B(&stack_A, &stack_B);
-    push_B(&stack_A, &stack_B);
-    reverse_rotate(&stack_B, 'b');
-    reverse_rotate(&stack_B, 'b');
-    push_B(&stack_A, &stack_B);
-
-    printf("STACK A: \n");
+    printf("================== STACK A before: \n");
     show(stack_A);
-    printf("STACK B: \n");
-    show(stack_B);
-
-    printf("The value with minor cust is: %d\n", cust_checker(&stack_A, &stack_B));
-
-    printf("================== STACK A: \n");
+    sorted_tree_elements(&stack_A);
+    printf("================== STACK A after: \n");
     show(stack_A);
-    printf("================== STACK B: \n");
-    show(stack_B);
+    is_sorted(stack_A);
+
+    
 
     /*
 
