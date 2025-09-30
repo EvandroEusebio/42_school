@@ -1,4 +1,5 @@
-
+#include "../includes/push_swap.h"
+// funtions for operations
 
 void swap_A(List *stack_A)
 {
@@ -77,10 +78,10 @@ void push_B(List *stack_A, List *stack_B)
         stack_A->begin->prev = NULL;
     else
         stack_A->last = NULL;
-    printf("Stack A\n");
-    show(*stack_A);
-    printf("Stack B\n");
-    show(*stack_B);
+    // printf("Stack A\n");
+    // show(*stack_A);
+    // printf("Stack B\n");
+    // show(*stack_B);
     printf("pb\n");
 }
 
@@ -103,16 +104,15 @@ void push_A(List *stack_A, List *stack_B)
         stack_B->begin->prev = NULL;
     else
         stack_B->last = NULL;
-    printf("Stack A\n");
-    show(*stack_A);
-    printf("Stack B\n");
-    show(*stack_B);
+    // printf("Stack A\n");
+    // show(*stack_A);
+    // printf("Stack B\n");
+    // show(*stack_B);
     printf("pa\n");
 }
 
-// the rotate B funtion does the same thing create an value for controller this type
-
-void rotate_A(List *stack_A)
+// r
+void rotate(List *stack_A, char type_stack)
 {
     Node *temp_node_head;
     Node *temp_node_last;
@@ -133,30 +133,47 @@ void rotate_A(List *stack_A)
     stack_A->last->next = NULL;
     stack_A->last->prev = temp_node_last;
     temp_node_last->next = temp_node_head;
-
-    printf("ra\n");
+    if (type_stack)
+        printf("r%c\n", type_stack);
 }
 
-void reverse_rotate_A(List *stack_A)
+// r->dupla
+void rotate_r(List *stack_A, List *stack_B)
+{
+    rotate(stack_A, 0);
+    rotate(stack_B, 0);
+    printf("rr\n");
+}
+
+// rr
+void reverse_rotate(List *stack, char type_stack)
 {
     Node *temp_node_head;
     Node *temp_node_last;
 
-    if (stack_A->total_elements <= 1)
+    if (stack->total_elements <= 1)
     {
         printf("Stack_A Empty!\n");
         return;
     }
-    temp_node_head = stack_A->begin;
-    temp_node_last = stack_A->last;
+    temp_node_head = stack->begin;
+    temp_node_last = stack->last;
     // swap last with second_last
-    stack_A->last = stack_A->last->prev;
-    stack_A->last->next = NULL;
+    stack->last = stack->last->prev;
+    stack->last->next = NULL;
     // swap old last for old first
-    stack_A->begin = temp_node_last;
-    stack_A->begin->next = temp_node_head;
-    stack_A->begin->prev = NULL;
+    stack->begin = temp_node_last;
+    stack->begin->next = temp_node_head;
+    stack->begin->prev = NULL;
     temp_node_head->prev = temp_node_last;
+    if (type_stack)
+        printf("rr%c\n", type_stack);
+}
 
-    printf("rra\n");
+// rrr-> dupla
+void reverse_rotate_r(List *stack_A, List *stack_B)
+{
+    reverse_rotate(stack_A, 0);
+    reverse_rotate(stack_B, 0);
+    printf("rrr\n");
 }

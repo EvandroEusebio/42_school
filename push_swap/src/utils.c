@@ -1,3 +1,21 @@
+// auxiliary funtions
+#include "../includes/push_swap.h"
+
+int max_value(int a, int b)
+{
+    if (a > b)
+        return (a);
+    return (b);
+}
+
+void inicialize(List *list)
+{
+    list->begin = NULL;
+    list->last = NULL;
+    list->total_elements = 0;
+}
+
+
 void show(List list)
 {
     Node *node;
@@ -75,19 +93,34 @@ int ft_atoi(char *str, List **stack)
     return (n_int);
 }
 
-void verify_duplicate_n(List **list, int number)
+int absolute_value(int value)
 {
-    Node *temp_node;
-
-    temp_node = (*list)->begin;
-    while (temp_node != NULL)
-    {
-        if (number == temp_node->v)
-        {
-            printf("Duplicate value!\n");
-            show_error_and_free(list);
-        }
-        temp_node = temp_node->next;
-    }
-    // printf("Nothing igual number!\n");
+    if (value < 0)
+        return (value * -1);
+    return (value);
 }
+
+// verify if list is sorted
+int is_sorted(List stack)
+{
+    Node *node;
+
+    if (!stack.begin)
+    {
+        printf("Empty Stack or only value!\n");
+        return (0);
+    }
+    node = stack.begin;
+    while (node->next)
+    {
+        if (node->v > node->next->v)
+        {
+            printf("Stack not sorted!\n");
+            return (0);
+        }
+        node = node->next;
+    }
+    printf("Stack sorted!\n");
+    return (1);
+}
+
