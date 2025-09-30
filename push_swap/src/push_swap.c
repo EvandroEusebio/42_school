@@ -3,9 +3,9 @@
 
 void push_swap(List *stack_a, List *stack_b)
 {
-    if (stack_a->total_elements <= 1)
+    if (is_sorted(*stack_a) == 1)
         return ;
-    else if (stack_a->total_elements == 2)
+    if (stack_a->total_elements == 2)
     {
         swap_A(stack_a);
         return ;
