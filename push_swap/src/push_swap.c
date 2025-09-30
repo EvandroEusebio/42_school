@@ -28,8 +28,9 @@ void push_swap(List *stack_a, List *stack_b)
         printf("Stack B ->\n");
         show(*stack_b);
     }
-     is_sorted(*stack_a);
-     sorted_tree_elements(stack_a);
+     if(is_sorted(*stack_a) == 0)
+        sorted_tree_elements(stack_a);
+     
      printf("sort Stack A ->\n");
      show(*stack_a);
 }
