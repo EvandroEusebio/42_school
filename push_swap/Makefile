@@ -25,7 +25,7 @@ $(NAME_EXECUTABLE): $(OBJ)
 
 # Compile rule
 %.o: $(SRC_DIR)/%.c
-	$(CC) $(CFLAGS) -I$(INCLUDE_DIR) -c $< -o $@
+	$(CC) $(CFLAGS) -I $(INCLUDE_DIR) -c $< -o $@
 
 # Clean only object files
 clean:

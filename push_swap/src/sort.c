@@ -17,8 +17,15 @@ void sorted_tree_elements(List *stack)
         reverse_rotate(stack, 'a');
     else if (max_value == stack->last->v && minor_value == stack->begin->next->v)
         swap_A(stack);
-    else
+    else if (max_value == stack->begin->v && minor_value == stack->last->v)
+    {
         rotate(stack, 'a');
+        swap_A(stack);
+    }
+    else if (max_value == stack->begin->v && minor_value == stack->begin->next->v)
+        rotate(stack, 'a');
+    else
+        reverse_rotate(stack, 'a');
 }
 
 void sorted_forth_elements(List *stack_a, List *stack_b)
@@ -32,10 +39,9 @@ void sorted_forth_elements(List *stack_a, List *stack_b)
 
     // operations for push minor value A to B
     operations(stack_a, stack_b, cust_top, 0);
-    
+
     // verify if stack_A is sorted if not sorted tree Elements
     if (is_sorted(*stack_a) == 0)
         sorted_tree_elements(stack_a);
     push_A(stack_a, stack_b);
-    
 }

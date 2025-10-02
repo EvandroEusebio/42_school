@@ -75,7 +75,7 @@ void    reverse_rotate_r(List *stack_A, List *stack_B);
 void    push_swap(List *stack_a, List *stack_b);
 void    sorted_tree_elements(List *stack);
 void    sorted_forth_elements(List *stack_a, List *stack_b);
-int     cust_checker(List *stack_A, List *stack_B);
+void    cust_checker(List *stack_A, List *stack_B);
 void    operations(List *stack_a, List *stack_b, int cust_a, int cust_b);
 
 // ============================
