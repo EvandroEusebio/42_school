@@ -75,7 +75,7 @@ void    reverse_rotate_r(List *stack_A, List *stack_B);
 void    push_swap(List *stack_a, List *stack_b);
 void    sorted_tree_elements(List *stack);
 void    sorted_forth_elements(List *stack_a, List *stack_b);
-void    cust_checker(List *stack_A, List *stack_B);
+int     cust_checker(List *stack_A, List *stack_B);
 void    operations(List *stack_a, List *stack_b, int cust_a, int cust_b);
 
 // ============================
@@ -87,5 +87,12 @@ int     calculate_cust_b(List stack_b, int value);
 int     find_min_value(List stack);
 int     find_max_value(List stack);
 int     pos_fit_value(List stack, int value);
+
+// ============================
+// === MOVE BACK ======
+// ============================
+void move_back(List *stack_a, List *stack_b);
+void move(List *stack_a, List *stack_b, int cust_a);
+int get_target_value(List stack, int value);
 
 #endif

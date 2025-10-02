@@ -13,8 +13,9 @@ INCLUDE_DIR = include
 C_FILES = cust.c operations.c push_swap.c stacks.c utils.c
 
 # Source and object lists
-SRC = $(SRC_DIR)/cust.c $(SRC_DIR)/operations.c $(SRC_DIR)/push_swap.c $(SRC_DIR)/stacks.c $(SRC_DIR)/utils.c  $(SRC_DIR)/sort.c main.c
-OBJ = cust.o operations.o push_swap.o stacks.o utils.o sort.o main.o
+SRC = $(SRC_DIR)/cust.c $(SRC_DIR)/operations.c $(SRC_DIR)/push_swap.c $(SRC_DIR)/stacks.c $(SRC_DIR)/utils.c  $(SRC_DIR)/sort.c $(SRC_DIR)/move_back_stack_a.c main.c
+
+OBJ = cust.o operations.o push_swap.o stacks.o utils.o sort.o move_back_stack_a.o main.o
 
 # Default target
 all: $(NAME_EXECUTABLE)
@@ -25,7 +26,7 @@ $(NAME_EXECUTABLE): $(OBJ)
 
 # Compile rule
 %.o: $(SRC_DIR)/%.c
-	$(CC) $(CFLAGS) -I $(INCLUDE_DIR) -c $< -o $@
+	$(CC) $(CFLAGS) -I$(INCLUDE_DIR) -c $< -o $@
 
 # Clean only object files
 clean:
