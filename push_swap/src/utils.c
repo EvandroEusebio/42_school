@@ -15,7 +15,6 @@ void inicialize(List *list)
     list->total_elements = 0;
 }
 
-
 void show(List list)
 {
     Node *node;
@@ -83,10 +82,8 @@ int ft_atoi(char *str, List **stack)
     }
     while (ft_isdigit(*str) != 0 && *str)
         value = (value * 10) + (*(str++) - '0');
-    // verify if exist character not digit
     if (ft_isdigit(*str) == 0 && *str != '\0')
         show_error_and_free(stack);
-    // verify if NUMBER converted is better than INT_MAX or INT_MIN
     if ((value * signal) > INT_MAX || (value * signal) < INT_MIN)
         show_error_and_free(stack);
     n_int = value * signal;
@@ -115,12 +112,11 @@ int is_sorted(List stack)
     {
         if (node->v > node->next->v)
         {
-            printf("Stack not sorted!\n");
+            // printf("Stack not sorted!\n");
             return (0);
         }
         node = node->next;
     }
-    printf("Stack sorted!\n");
+    // printf("Stack sorted!\n");
     return (1);
 }
-

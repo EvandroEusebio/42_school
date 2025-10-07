@@ -78,10 +78,6 @@ void push_B(List *stack_A, List *stack_B)
         stack_A->begin->prev = NULL;
     else
         stack_A->last = NULL;
-    // printf("Stack A\n");
-    // show(*stack_A);
-    // printf("Stack B\n");
-    // show(*stack_B);
     printf("pb\n");
 }
 
@@ -104,10 +100,6 @@ void push_A(List *stack_A, List *stack_B)
         stack_B->begin->prev = NULL;
     else
         stack_B->last = NULL;
-    // printf("Stack A\n");
-    // show(*stack_A);
-    // printf("Stack B\n");
-    // show(*stack_B);
     printf("pa\n");
 }
 

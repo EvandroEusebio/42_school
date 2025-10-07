@@ -16,10 +16,8 @@ int calculate_cust_b(List stack_b, int value)
     else
     {
         pos_fit = pos_fit_value(stack_b, value);
-        printf("Pos Fit: %d\n", pos_fit);
         return (pos_fit);
     }
-    printf("Custo: %d\n", cust);
     return (cust);
 }
 
@@ -107,6 +105,7 @@ int pos_fit_value(List stack, int value)
     int index;
     int min_max;
     Node *temp_node;
+
     if (!stack.begin)
         return (0);
     pos = 0;
@@ -119,13 +118,9 @@ int pos_fit_value(List stack, int value)
         {
             min_max = temp_node->v;
             pos = index;
-            printf("pos: %d\n", pos);
         }
         index++;
         temp_node = temp_node->next;
     }
-    printf("--------PosFitEXec---------\n");
-    printf("Menor maior Valor: %d\n", min_max);
-    printf("Position Element: %d\n", pos);
     return (pos);
 }

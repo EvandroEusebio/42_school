@@ -1,5 +1,43 @@
 #include "../includes/push_swap.h"
 
+int find_position(List stack, int v)
+{
+    int pos;
+    Node *temp_node;
+    
+    pos = 0;
+    temp_node = stack.begin;
+    while (temp_node)
+    {
+        if(temp_node->v == v)
+            return (pos);
+        pos++;
+        temp_node = temp_node->next;
+    }
+    return (pos);
+}
+
+void put_min_top(List *stack)
+{
+    int min_value;
+    int pos;
+    int half;
+
+    min_value = find_min_value(*stack);
+    pos = find_position(*stack, min_value);
+    half = stack->total_elements / 2;
+    if (pos <= half)
+    {
+        while (stack->begin->v != min_value)
+            rotate(stack, 'a');
+    }
+    else
+    {
+        while (stack->begin->v != min_value)
+            reverse_rotate(stack, 'a');
+    }
+}
+
 void move_back(List *stack_a, List *stack_b)
 {
     Node *temp_node_b;
@@ -16,8 +54,7 @@ void move_back(List *stack_a, List *stack_b)
         cust = calculate_cust(*stack_a, target_value);
         temp_node_b = temp_node_b->next;
         move(stack_a, stack_b, cust);
-        printf("New StacK A-------------------------------\n");
-        show(*stack_a);
+        put_min_top(stack_a);
     }
 }
 

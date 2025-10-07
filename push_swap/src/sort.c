@@ -3,26 +3,29 @@
 // sorted for list with tree elements
 void sorted_tree_elements(List *stack)
 {
-    int a = stack->begin->v;
-    int b = stack->begin->next->v;
-    int c = stack->last->v;
+    int minor_value;
+    int max_value;
 
-    if (a > b && b < c && a < c)
-        swap_A(stack); // caso 1
-    else if (a > b && b > c)
+    minor_value = find_min_value(*stack);
+    max_value = find_max_value(*stack);
+    if (minor_value == stack->begin->v && max_value == stack->begin->next->v)
     {
-        swap_A(stack); // caso 2
-        reverse_rotate(stack, 'a');
-    }
-    else if (a > b && b < c && a > c)
-        rotate(stack, 'a'); // caso 3
-    else if (a < b && b > c && a < c)
-    {
-        swap_A(stack); // caso 4
+        swap_A(stack);
         rotate(stack, 'a');
     }
-    else if (a < b && b > c && a > c)
-        reverse_rotate(stack, 'a'); // caso 5
+    else if (minor_value == stack->last->v && max_value == stack->begin->next->v)
+        reverse_rotate(stack, 'a');
+    else if (max_value == stack->last->v && minor_value == stack->begin->next->v)
+        swap_A(stack);
+    else if (max_value == stack->begin->v && minor_value == stack->last->v)
+    {
+        rotate(stack, 'a');
+        swap_A(stack);
+    }
+    else if (max_value == stack->begin->v && minor_value == stack->begin->next->v)
+        rotate(stack, 'a');
+    else
+        reverse_rotate(stack, 'a');
 }
 
 void sorted_forth_elements(List *stack_a, List *stack_b)

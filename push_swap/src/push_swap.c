@@ -1,19 +1,18 @@
 #include "../includes/push_swap.h"
 
-
 void push_swap(List *stack_a, List *stack_b)
 {
     if (is_sorted(*stack_a) == 1)
-        return ;
+        return;
     if (stack_a->total_elements == 2)
     {
         swap_A(stack_a);
-        return ;
+        return;
     }
-    else if(stack_a->total_elements == 4)
+    else if (stack_a->total_elements == 4)
     {
         sorted_forth_elements(stack_a, stack_b);
-        return ;
+        return;
     }
     else if (stack_a->total_elements > 4)
     {
@@ -21,18 +20,11 @@ void push_swap(List *stack_a, List *stack_b)
         push_B(stack_a, stack_b);
     }
     while (stack_a->total_elements > 3)
-    {
         cust_checker(stack_a, stack_b);
-        printf("Stack A ->\n");
-        show(*stack_a);
-        printf("Stack B ->\n");
-        show(*stack_b);
-    }
-    if(is_sorted(*stack_a) == 0)
+    if (is_sorted(*stack_a) == 0)
         sorted_tree_elements(stack_a);
     move_back(stack_a, stack_b);
 }
-
 
 // aux operation funtion
 void operations(List *stack_a, List *stack_b, int cust_a, int cust_b)
@@ -75,7 +67,6 @@ void operations(List *stack_a, List *stack_b, int cust_a, int cust_b)
     push_B(stack_a, stack_b);
 }
 
-
 int cust_checker(List *stack_A, List *stack_B)
 {
     int cust_a;
@@ -98,9 +89,6 @@ int cust_checker(List *stack_A, List *stack_B)
             total_cust = (absolute_value(max_value(cust_a, cust_b))) + 1;
         else
             total_cust = absolute_value(cust_a) + absolute_value(cust_b) + 1;
-         printf("Cust A: %d\n", cust_a);
-         printf("Cust B: %d\n", cust_b);
-         printf("Total Cust: %d\n", total_cust);
         if (initial_verification == 0)
         {
             minor_cust = total_cust;

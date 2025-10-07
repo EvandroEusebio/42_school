@@ -13,6 +13,7 @@ int main(int n_args, char **args)
 
     push_swap(&stack_A, &stack_B);
 
+    printf("\n\n\nEND----------------------->\n");
     printf("Stack A ->\n");
     show(stack_A);
     printf("Stack B ->\n");
