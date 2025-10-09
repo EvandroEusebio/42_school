@@ -50,7 +50,7 @@ void move_back(List *stack_a, List *stack_b)
 
     while (temp_node_b)
     {
-        target_value = get_target_value(*stack_a, temp_node_b->v);
+        target_value = get_target_value_a(*stack_a, temp_node_b->v);
         cust = calculate_cust(*stack_a, target_value);
         temp_node_b = temp_node_b->next;
         move(stack_a, stack_b, cust);
@@ -73,7 +73,7 @@ void move(List *stack_a, List *stack_b, int cust_a)
     push_A(stack_a, stack_b);
 }
 
-int get_target_value(List stack, int value)
+int get_target_value_a(List stack, int value)
 {
     Node *tempo_node;
     int target;
@@ -89,4 +89,25 @@ int get_target_value(List stack, int value)
     if (target == INT_MAX)
         return (find_min_value(stack));
     return (target);
+}
+
+int get_target_value_b(List stack, int value)
+{
+    Node *tempo_node;
+    int target;
+
+    /* Se a lista estiver vazia cuide conforme seu caso */
+    target = INT_MIN;
+    tempo_node = stack.begin;
+    while (tempo_node)
+    {
+        /* procura o maior valor que seja < value */
+        if (tempo_node->v < value && tempo_node->v > target)
+            target = tempo_node->v;
+        tempo_node = tempo_node->next;
+    }
+    /* se não encontrou nenhum < value, faz wrap-around pegando o máximo */
+    if (target == INT_MIN)
+        return find_max_value(stack);
+    return target;
 }

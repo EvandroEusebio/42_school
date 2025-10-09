@@ -26,6 +26,7 @@ void sorted_tree_elements(List *stack)
         rotate(stack, 'a');
     else
         reverse_rotate(stack, 'a');
+    return ;
 }
 
 void sorted_forth_elements(List *stack_a, List *stack_b)
@@ -44,4 +45,5 @@ void sorted_forth_elements(List *stack_a, List *stack_b)
     if (is_sorted(*stack_a) == 0)
         sorted_tree_elements(stack_a);
     push_A(stack_a, stack_b);
+    return ;
 }

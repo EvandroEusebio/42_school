@@ -7,6 +7,7 @@ int calculate_cust_b(List stack_b, int value)
     int min_value;
     int cust;
     int pos_fit;
+    int target;
 
     max_value = find_max_value(stack_b);
     min_value = find_min_value(stack_b);
@@ -15,13 +16,13 @@ int calculate_cust_b(List stack_b, int value)
         cust = calculate_cust(stack_b, max_value);
     else
     {
-        pos_fit = pos_fit_value(stack_b, value);
+        target = get_target_value_b(stack_b, value);
+        pos_fit = calculate_cust(stack_b, target);
         return (pos_fit);
     }
     return (cust);
 }
 
-// the calcule of the cust in A is diferent of B
 int calculate_cust(List stack, int v)
 {
     int pos_value;
