@@ -1,4 +1,3 @@
-// auxiliary funtions
 #include "../includes/push_swap.h"
 
 int max_value(int a, int b)
@@ -13,18 +12,6 @@ void inicialize(List *list)
     list->begin = NULL;
     list->last = NULL;
     list->total_elements = 0;
-}
-
-void show(List list)
-{
-    Node *node;
-
-    node = list.begin;
-    while (node != NULL)
-    {
-        printf("%d\n", node->v);
-        node = node->next;
-    }
 }
 
 void free_stack(List *list)
@@ -95,27 +82,4 @@ int absolute_value(int value)
     if (value < 0)
         return (value * -1);
     return (value);
-}
-
-int is_sorted(List stack)
-{
-    Node *node;
-
-    if (!stack.begin)
-    {
-        printf("Empty Stack or only value!\n");
-        return (0);
-    }
-    node = stack.begin;
-    while (node->next)
-    {
-        if (node->v > node->next->v)
-        {
-            //printf("Stack not sorted!\n");
-            return (0);
-        }
-        node = node->next;
-    }
-    printf("Stack sorted!\n");
-    return (1);
 }

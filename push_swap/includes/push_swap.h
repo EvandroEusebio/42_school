@@ -34,7 +34,6 @@ typedef struct list
 // =======================
 
 void inicialize(List *list);
-void show(List list);
 void free_stack(List *list);
 void show_error(void);
 void show_error_and_free(List **stack);
@@ -82,7 +81,6 @@ void reverse_rotate_r(List *stack_A, List *stack_B);
 
 void push_swap(List *stack_a, List *stack_b);
 void sorted_tree_elements(List *stack);
-void operations(List *stack_a, List *stack_b, int cust_a, int cust_b);
 
 // ============================
 // === CÁLCULOS DE CUSTO ======
@@ -96,19 +94,14 @@ int find_max_index(List stack);
 // ============================
 void move_back(List *stack_a, List *stack_b);
 void move(List *stack_a, List *stack_b, Node *n);
-void get_target_value(List *stack, int value_index, Node *n);
 void put_min_top(List *stack);
-
-int c_cust(List stack, int v);
 
 void set_cust(List *stack_a, List *stack_b);
 void move_cheap_v(List *stack_a, List *stack_b);
 void set_total_cust(Node *n);
 void get_cust_top_target(List stack_a, Node *n);
 void get_cust_top(int size, Node *n);
-void get_target_value(List *stack, int value_index, Node *n);
+void get_target_pos(List *stack, int value_index, Node *n);
 int get_pos(List stack, int v);
-
-
 
 #endif

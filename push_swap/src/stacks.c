@@ -1,7 +1,4 @@
-// essencial funtions for manipulate stacks
 #include "../includes/push_swap.h"
-
-
 
 int insert_start(List **list, int v)
 {

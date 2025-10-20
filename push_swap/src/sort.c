@@ -1,6 +1,5 @@
 #include "../includes/push_swap.h"
 
-// sorted for list with tree elements
 void sorted_tree_elements(List *stack)
 {
     int minor_value;
@@ -26,4 +25,27 @@ void sorted_tree_elements(List *stack)
         rotate(stack, 'a');
     else
         reverse_rotate(stack, 'a');
+}
+
+int is_sorted(List stack)
+{
+    Node *node;
+
+    if (!stack.begin)
+    {
+        printf("Empty Stack or only value!\n");
+        return (0);
+    }
+    node = stack.begin;
+    while (node->next)
+    {
+        if (node->v > node->next->v)
+        {
+            //printf("Stack not sorted!\n");
+            return (0);
+        }
+        node = node->next;
+    }
+    printf("Stack sorted!\n");
+    return (1);
 }

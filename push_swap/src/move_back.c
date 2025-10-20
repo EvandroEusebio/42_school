@@ -1,21 +1,5 @@
 #include "../includes/push_swap.h"
 
-// Rafactor
-void put_min_top(List *stack)
-{
-    int min_index = find_min_index(*stack);
-    int cust_top_min = get_pos(*stack, min_index);
-
-    if (cust_top_min > stack->total_elements / 2)
-        cust_top_min = (stack->total_elements - cust_top_min) * -1;
-
-    if (cust_top_min > 0)
-        while (cust_top_min--)
-            rotate(stack, 'a');
-    else
-        while (cust_top_min++)
-            reverse_rotate(stack, 'a');
-}
 
 void move_back(List *stack_a, List *stack_b)
 {
@@ -31,29 +15,6 @@ void move_back(List *stack_a, List *stack_b)
     put_min_top(stack_a);
 }
 
-int c_cust(List stack, int v)
-{
-    Node *temp_node;
-    int cust_put_top;
-    int indice;
-
-    cust_put_top = 0;
-    indice = 0;
-
-    temp_node = stack.begin;
-    while (temp_node)
-    {
-        if (temp_node->v == v)
-            break;
-        indice++;
-        temp_node = temp_node->next;
-    }
-    if (indice <= stack.total_elements / 2)
-        cust_put_top = indice;
-    else
-        cust_put_top = indice - stack.total_elements;
-    return (cust_put_top);
-}
 
 void move(List *stack_a, List *stack_b, Node *n)
 {
@@ -84,24 +45,9 @@ void move(List *stack_a, List *stack_b, Node *n)
     set_pos(stack_b);
 }
 
-int get_pos(List stack, int v)
-{
-    Node *temp_node;
-    int pos;
 
-    temp_node = stack.begin;
-    pos = 0;
-    while (temp_node)
-    {
-        if (temp_node->index == v)
-            return (pos);
-        pos++;
-        temp_node = temp_node->next;
-    }
-    return (0);
-}
 
-void get_target_value(List *stack, int value_index, Node *n)
+void get_target_pos(List *stack, int value_index, Node *n)
 {
     Node *tempo_node = stack->begin;
     int target = INT_MAX;
@@ -123,4 +69,25 @@ void get_target_value(List *stack, int value_index, Node *n)
         target_pos = get_pos(*stack, min_index);
     }
     n->target_pos = target_pos;
+}
+
+void move_cheap_v(List *stack_a, List *stack_b)
+{
+    Node *temp_node_b;
+    Node *cheap_node;
+    int min_total_cust;
+
+    temp_node_b = stack_b->begin;
+    min_total_cust = temp_node_b->total_cust;
+    cheap_node = temp_node_b;
+    while (temp_node_b)
+    {
+        if (temp_node_b->total_cust < min_total_cust)
+        {
+            cheap_node = temp_node_b;
+            min_total_cust = temp_node_b->total_cust;
+        }
+        temp_node_b = temp_node_b->next;
+    }
+    move(stack_a, stack_b, cheap_node);
 }
