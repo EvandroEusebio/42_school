@@ -1,59 +1,40 @@
 #include "../includes/push_swap.h"
-// funtions for operations
 
 void swap_A(List *stack_A)
 {
-    int temp;
-    // perform the same action
+    int temp_v;
     if (stack_A->begin == NULL)
-    {
-        printf("Stack_A is empty!\n");
         return;
-    }
     else if (stack_A->total_elements == 1)
-    {
-        printf("can not to perform this action (SA)\n");
         return;
-    }
-    temp = stack_A->begin->v;
+    temp_v = stack_A->begin->v;
     stack_A->begin->v = stack_A->begin->next->v;
-    stack_A->begin->next->v = temp;
+    stack_A->begin->next->v = temp_v;
+    set_pos(stack_A);
+
     printf("sa\n");
 }
 
 void swap_B(List *stack_B)
 {
-    int temp;
-    // perform the same action
+    int temp_v;
     if (stack_B->begin == NULL)
-    {
-        printf("Stack_A is empty!\n");
         return;
-    }
     else if (stack_B->total_elements == 1)
-    {
-        printf("can not to perform this action (SA)\n");
         return;
-    }
-    temp = stack_B->begin->v;
+    temp_v = stack_B->begin->v;
     stack_B->begin->v = stack_B->begin->next->v;
-    stack_B->begin->next->v = temp;
+    stack_B->begin->next->v = temp_v;
+    set_pos(stack_B);
     printf("sb\n");
 }
 
 void swap_A_B(List *stack_A, List *stack_B)
 {
-    // perform the same action
     if (stack_B->begin == NULL || stack_A->begin == NULL)
-    {
-        printf("Stack_A or B is empty!\n");
         return;
-    }
     else if (stack_B->total_elements == 1 || stack_A->total_elements == 1)
-    {
-        printf("can not to perform this action (SA) with one Element \n");
         return;
-    }
     swap_A(stack_A);
     swap_B(stack_B);
     printf("ss\n");
@@ -62,13 +43,9 @@ void swap_A_B(List *stack_A, List *stack_B)
 void push_B(List *stack_A, List *stack_B)
 {
     Node *temp_node;
-    // perform the same action
     if (stack_A->begin == NULL)
-    {
-        printf("Stack_A is empty!\n");
         return;
-    }
-    insert_start(&stack_B, stack_A->begin->v);
+    insert_start(&stack_B, stack_A->begin->v, stack_A->begin->index);
     temp_node = stack_A->begin->next;
     free(stack_A->begin);
     stack_A->begin = NULL;
@@ -78,19 +55,17 @@ void push_B(List *stack_A, List *stack_B)
         stack_A->begin->prev = NULL;
     else
         stack_A->last = NULL;
+    set_pos(stack_B);
+    set_pos(stack_A);
     printf("pb\n");
 }
 
 void push_A(List *stack_A, List *stack_B)
 {
     Node *temp_node;
-    // perform the same action
     if (stack_B->begin == NULL)
-    {
-        printf("Stack_B is empty!\n");
         return;
-    }
-    insert_start(&stack_A, stack_B->begin->v);
+    insert_start(&stack_A, stack_B->begin->v, stack_B->begin->index);
     temp_node = stack_B->begin->next;
     free(stack_B->begin);
     stack_B->begin = NULL;
@@ -100,6 +75,8 @@ void push_A(List *stack_A, List *stack_B)
         stack_B->begin->prev = NULL;
     else
         stack_B->last = NULL;
+    set_pos(stack_A);
+    set_pos(stack_B);
     printf("pa\n");
 }
 
@@ -110,23 +87,19 @@ void rotate(List *stack_A, char type_stack)
     Node *temp_node_last;
 
     if (stack_A->total_elements <= 1)
-    {
-        printf("Stack_A Empty!\n");
         return;
-    }
     temp_node_head = stack_A->begin;
     temp_node_last = stack_A->last;
 
-    // swap first with second
     stack_A->begin = stack_A->begin->next;
     stack_A->begin->prev = NULL;
-    // swap old first for last
     stack_A->last = temp_node_head;
     stack_A->last->next = NULL;
     stack_A->last->prev = temp_node_last;
     temp_node_last->next = temp_node_head;
     if (type_stack)
         printf("r%c\n", type_stack);
+    set_pos(stack_A);
 }
 
 // r->dupla
@@ -160,6 +133,7 @@ void reverse_rotate(List *stack, char type_stack)
     temp_node_head->prev = temp_node_last;
     if (type_stack)
         printf("rr%c\n", type_stack);
+    set_pos(stack);
 }
 
 // rrr-> dupla

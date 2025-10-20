@@ -1,9 +1,6 @@
-// essencial funtions for manipulate stacks
 #include "../includes/push_swap.h"
 
-
-
-int insert_start(List **list, int v)
+int insert_start(List **list, int v, int index)
 {
     Node *n;
 
@@ -15,19 +12,20 @@ int insert_start(List **list, int v)
     n->next = (*list)->begin;
     (*list)->begin = n;
     n->v = v;
+    n->index = index;
     if ((*list)->last == NULL)
         (*list)->last = n;
     (*list)->total_elements++;
     return (0);
 }
 
-int insert_end(List **list, int v)
+int insert_end(List **list, int v, int index)
 {
     Node *n;
 
     if ((*list)->begin == NULL)
     {
-        insert_start(list, v);
+        insert_start(list, v, index);
         return (0);
     }
     n = (Node *)malloc(sizeof(Node));
@@ -38,7 +36,9 @@ int insert_end(List **list, int v)
     (*list)->last = n;
     n->next = NULL;
     n->v = v;
+    n->index = index;
     (*list)->total_elements++;
+
     return (0);
 }
 
@@ -58,7 +58,29 @@ void verify_duplicate_n(List **list, int number)
     }
 }
 
-int parsing_stack(List *stack, char **args)
+void addIndex(List *stack)
+{
+    int index;
+    Node *current_node;
+    Node *compare_node;
+
+    current_node = stack->begin;
+    while (current_node)
+    {
+        index = 0;
+        compare_node = stack->begin;
+        while (compare_node)
+        {
+            if (compare_node->v < current_node->v)
+                index++;
+            compare_node = compare_node->next;
+        }
+        current_node->index = index;
+        current_node = current_node->next;
+    }
+}
+
+void parsing_stack(List *stack, char **args)
 {
     int n;
     int i;
@@ -68,8 +90,9 @@ int parsing_stack(List *stack, char **args)
     {
         n = ft_atoi(*args, &stack);
         verify_duplicate_n(&stack, n);
-        insert_end(&stack, n);
+        insert_end(&stack, n, 0);
         i++;
     }
-    return (0);
+    set_pos(stack);
+    return;
 }

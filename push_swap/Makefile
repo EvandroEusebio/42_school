@@ -2,7 +2,7 @@
 NAME_EXECUTABLE = push_swap
 
 # Compiler and flags
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 # Paths
@@ -10,12 +10,12 @@ SRC_DIR = src
 INCLUDE_DIR = include
 
 # Source files (só os nomes)
-C_FILES = cust.c operations.c push_swap.c stacks.c utils.c
+C_FILES = cust.c operations.c push_swap.c inicialize.c utils.c position.o
 
 # Source and object lists
-SRC = $(SRC_DIR)/cust.c $(SRC_DIR)/operations.c $(SRC_DIR)/push_swap.c $(SRC_DIR)/stacks.c $(SRC_DIR)/utils.c  $(SRC_DIR)/sort.c $(SRC_DIR)/move_back_stack_a.c main.c
+SRC = $(SRC_DIR)/cust.c $(SRC_DIR)/operations.c $(SRC_DIR)/push_swap.c $(SRC_DIR)/position.c $(SRC_DIR)/stacks.c $(SRC_DIR)/utils.c  $(SRC_DIR)/sort.c $(SRC_DIR)/move_back_stack_a.c main.c
 
-OBJ = cust.o operations.o push_swap.o stacks.o utils.o sort.o move_back_stack_a.o main.o
+OBJ = cust.o operations.o push_swap.o inicialize.o utils.o sort.o move_back_stack_a.o position.o main.o
 
 # Default target
 all: $(NAME_EXECUTABLE)

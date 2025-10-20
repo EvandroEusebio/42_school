@@ -1,113 +1,126 @@
 #include "../includes/push_swap.h"
 
-int find_position(List stack, int v)
-{
-    int pos;
-    Node *temp_node;
-    
-    pos = 0;
-    temp_node = stack.begin;
-    while (temp_node)
-    {
-        if(temp_node->v == v)
-            return (pos);
-        pos++;
-        temp_node = temp_node->next;
-    }
-    return (pos);
-}
-
+// Rafactor
 void put_min_top(List *stack)
 {
-    int min_value;
-    int pos;
-    int half;
+    int min_index = find_min_index(*stack);
+    int cust_top_min = get_pos(*stack, min_index);
 
-    min_value = find_min_value(*stack);
-    pos = find_position(*stack, min_value);
-    half = stack->total_elements / 2;
-    if (pos <= half)
-    {
-        while (stack->begin->v != min_value)
+    if (cust_top_min > stack->total_elements / 2)
+        cust_top_min = (stack->total_elements - cust_top_min) * -1;
+
+    if (cust_top_min > 0)
+        while (cust_top_min--)
             rotate(stack, 'a');
-    }
     else
-    {
-        while (stack->begin->v != min_value)
+        while (cust_top_min++)
             reverse_rotate(stack, 'a');
-    }
 }
 
 void move_back(List *stack_a, List *stack_b)
 {
-    Node *temp_node_b;
-    int target_value;
-    int cust;
 
-    if (!stack_b)
+    if (!stack_b || !stack_a)
         return;
-    temp_node_b = stack_b->begin;
 
-    while (temp_node_b)
+    while (stack_b->total_elements > 0)
     {
-        target_value = get_target_value_a(*stack_a, temp_node_b->v);
-        cust = calculate_cust(*stack_a, target_value);
-        temp_node_b = temp_node_b->next;
-        move(stack_a, stack_b, cust);
-        put_min_top(stack_a);
+        set_cust(stack_a, stack_b);
+        move_cheap_v(stack_a, stack_b);
     }
+    put_min_top(stack_a);
 }
 
-void move(List *stack_a, List *stack_b, int cust_a)
+int c_cust(List stack, int v)
 {
-    while (cust_a < 0)
+    Node *temp_node;
+    int cust_put_top;
+    int indice;
+
+    cust_put_top = 0;
+    indice = 0;
+
+    temp_node = stack.begin;
+    while (temp_node)
     {
-        reverse_rotate(stack_a, 'a');
-        cust_a++;
+        if (temp_node->v == v)
+            break;
+        indice++;
+        temp_node = temp_node->next;
     }
-    while (cust_a > 0)
+    if (indice <= stack.total_elements / 2)
+        cust_put_top = indice;
+    else
+        cust_put_top = indice - stack.total_elements;
+    return (cust_put_top);
+}
+
+void move(List *stack_a, List *stack_b, Node *n)
+{
+
+    while (n->cust_a > 0 && n->cust_b > 0)
     {
-        rotate(stack_a, 'a');
-        cust_a--;
+        rotate_r(stack_a, stack_b);
+        n->cust_a--;
+        n->cust_b--;
     }
+    while (n->cust_a < 0 && n->cust_b < 0)
+    {
+        reverse_rotate_r(stack_a, stack_b);
+        n->cust_a++;
+        n->cust_b++;
+    }
+    while (n->cust_a > 0)
+        rotate(stack_a, 'a'), n->cust_a--;
+    while (n->cust_a < 0)
+        reverse_rotate(stack_a, 'a'), n->cust_a++;
+    while (n->cust_b > 0)
+        rotate(stack_b, 'b'), n->cust_b--;
+    while (n->cust_b < 0)
+        reverse_rotate(stack_b, 'b'), n->cust_b++;
+
     push_A(stack_a, stack_b);
+    set_pos(stack_a);
+    set_pos(stack_b);
 }
 
-int get_target_value_a(List stack, int value)
+int get_pos(List stack, int v)
 {
-    Node *tempo_node;
-    int target;
+    Node *temp_node;
+    int pos;
 
-    target = INT_MAX;
-    tempo_node = stack.begin;
+    temp_node = stack.begin;
+    pos = 0;
+    while (temp_node)
+    {
+        if (temp_node->index == v)
+            return (pos);
+        pos++;
+        temp_node = temp_node->next;
+    }
+    return (0);
+}
+
+void get_target_value(List *stack, int value_index, Node *n)
+{
+    Node *tempo_node = stack->begin;
+    int target = INT_MAX;
+    int target_pos = -1;
+
     while (tempo_node)
     {
-        if (value < tempo_node->v && tempo_node->v < target)
-            target = tempo_node->v;
+        int idx = tempo_node->index;
+        if (value_index < idx && idx < target)
+        {
+            target = idx;
+            target_pos = tempo_node->pos;
+        }
         tempo_node = tempo_node->next;
     }
     if (target == INT_MAX)
-        return (find_min_value(stack));
-    return (target);
-}
-
-int get_target_value_b(List stack, int value)
-{
-    Node *tempo_node;
-    int target;
-
-    /* Se a lista estiver vazia cuide conforme seu caso */
-    target = INT_MIN;
-    tempo_node = stack.begin;
-    while (tempo_node)
     {
-        /* procura o maior valor que seja < value */
-        if (tempo_node->v < value && tempo_node->v > target)
-            target = tempo_node->v;
-        tempo_node = tempo_node->next;
+        int min_index = find_min_index(*stack);
+        target_pos = get_pos(*stack, min_index);
     }
-    /* se não encontrou nenhum < value, faz wrap-around pegando o máximo */
-    if (target == INT_MIN)
-        return find_max_value(stack);
-    return target;
+    n->target_pos = target_pos;
 }

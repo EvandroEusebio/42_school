@@ -14,6 +14,12 @@ typedef struct node
     int v;
     struct node *next;
     struct node *prev;
+    int cust_a;
+    int cust_b;
+    int index;
+    int total_cust;
+    int pos;
+    int target_pos;
 } Node;
 
 typedef struct list
@@ -37,15 +43,17 @@ int ft_atoi(char *str, List **stack);
 int is_sorted(List stack);
 int absolute_value(int value);
 int max_value(int a, int b);
+void addIndex(List *stack);
+void set_pos(List *stack);
 
 // ============================
 // === OPERAÇÕES DE PILHA ====
 // ============================
 
-int insert_start(List **list, int v);
-int insert_end(List **list, int v);
+int insert_start(List **list, int v, int index);
+int insert_end(List **list, int v, int index);
 void verify_duplicate_n(List **list, int number);
-int parsing_stack(List *stack, char **args);
+void parsing_stack(List *stack, char **args);
 
 // ============================
 // === OPERAÇÕES PUSH_SWAP ====
@@ -74,27 +82,33 @@ void reverse_rotate_r(List *stack_A, List *stack_B);
 
 void push_swap(List *stack_a, List *stack_b);
 void sorted_tree_elements(List *stack);
-void sorted_forth_elements(List *stack_a, List *stack_b);
-void cust_checker(List *stack_A, List *stack_B);
 void operations(List *stack_a, List *stack_b, int cust_a, int cust_b);
 
 // ============================
 // === CÁLCULOS DE CUSTO ======
 // ============================
 
-int calculate_cust(List stack, int v);
-int calculate_cust_b(List stack_b, int value);
-int find_min_value(List stack);
-int find_max_value(List stack);
-int pos_fit_value(List stack, int value);
+int find_min_index(List stack);
+int find_max_index(List stack);
 
 // ============================
 // === MOVE BACK ======
 // ============================
 void move_back(List *stack_a, List *stack_b);
-void move(List *stack_a, List *stack_b, int cust_a);
-int get_target_value_b(List stack, int value);
-int get_target_value_a(List stack, int value);
+void move(List *stack_a, List *stack_b, Node *n);
+void get_target_value(List *stack, int value_index, Node *n);
 void put_min_top(List *stack);
+
+int c_cust(List stack, int v);
+
+void set_cust(List *stack_a, List *stack_b);
+void move_cheap_v(List *stack_a, List *stack_b);
+void set_total_cust(Node *n);
+void get_cust_top_target(List stack_a, Node *n);
+void get_cust_top(int size, Node *n);
+void get_target_value(List *stack, int value_index, Node *n);
+int get_pos(List stack, int v);
+
+
 
 #endif

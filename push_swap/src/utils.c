@@ -97,7 +97,6 @@ int absolute_value(int value)
     return (value);
 }
 
-// verify if list is sorted
 int is_sorted(List stack)
 {
     Node *node;
@@ -112,11 +111,11 @@ int is_sorted(List stack)
     {
         if (node->v > node->next->v)
         {
-            // printf("Stack not sorted!\n");
+            //printf("Stack not sorted!\n");
             return (0);
         }
         node = node->next;
     }
-    // printf("Stack sorted!\n");
+    printf("Stack sorted!\n");
     return (1);
 }
