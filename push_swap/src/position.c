@@ -1,87 +1,62 @@
-// #include "../includes/push_swap.h"
+#include "../includes/push_swap.h"
 
-// void set_pos(List *stack)
-// {
-//     Node *temp_stack;
-//     int i;
+int get_target_position(node_stack **stack_a, int index, int max_index, int target_pos)
+{
+    node_stack *temp_stack_a;
 
-//     i = 0;
-//     temp_stack = stack->begin;
-//     while (temp_stack)
-//     {
-//         temp_stack->pos = i;
-//         i++;
-//         temp_stack = temp_stack->next;
-//     }
-// }
+    temp_stack_a = *stack_a;
+    while (temp_stack_a)
+    {
+        if (temp_stack_a->index > index && temp_stack_a->index < max_index)
+        {
+            max_index = temp_stack_a->index;
+            target_pos = temp_stack_a->position;
+        }
+        temp_stack_a = temp_stack_a->next;
+    }
+    if (max_index != INT_MAX)
+        return (target_pos);
+    temp_stack_a = *stack_a;
+    while (temp_stack_a)
+    {
+        if (temp_stack_a->index < max_index)
+        {
+            max_index = temp_stack_a->index;
+            target_pos = temp_stack_a->position;
+        }
+        temp_stack_a = temp_stack_a->next;
+    }
+    return (target_pos);
+}
 
-// int find_min_index(List stack)
-// {
-//     Node *t = stack.begin;
-    
-//     if (!stack.begin)
-//         return INT_MAX;
+void get_stack_positions(node_stack **stack)
+{
+    node_stack *temp;
+    int position;
 
-//     int min_idx = t->index;
-//     while (t)
-//     {
-//         if (t->index < min_idx)
-//             min_idx = t->index;
-//         t = t->next;
-//     }
-//     return min_idx;
-// }
+    temp = *stack;
+    position = 0;
+    while (temp)
+    {
+        temp->position = position;
+        temp = temp->next;
+        position++;
+    }
+}
 
-// int find_max_index(List stack)
-// {
-//     int max;
-//     Node *temp_node;
-//     int initial;
-//     if (!stack.begin)
-//     {
-//         printf("Nenhum valor maximo!");
-//         exit(0);
-//     }
-//     max = 0;
-//     temp_node = stack.begin;
-//     initial = 0;
-//     while (temp_node)
-//     {
-//         if (initial == 0)
-//         {
-//             max = temp_node->index;
-//             initial++;
-//         }
-//         else if (temp_node->index > max)
-//             max = temp_node->index;
-//         temp_node = temp_node->next;
-//     }
-//     return (max);
-// }
+void put_target_pos(node_stack **stack_a, node_stack **stack_b)
+{
+    node_stack *b;
+    int target_pos;
 
-
-// void showPos(List list)
-// {
-//     Node *node;
-
-//     node = list.begin;
-//     while (node != NULL)
-//     {
-//         node = node->next;
-//     }
-// }
-
-// int get_pos(List stack, int v)
-// {
-//     Node *temp_node;
-
-//     temp_node = stack.begin;
-//     while (temp_node)
-//     {
-//         showPos(stack);
-//         if (temp_node->index == v)
-//             return temp_node->pos;
-//         temp_node = temp_node->next;
-//     }
-//     return (0);
-// }
+    b = *stack_b;
+    get_stack_positions(stack_a);
+    get_stack_positions(stack_b);
+    target_pos = 0;
+    while (b)
+    {
+        target_pos = get_target_position(stack_a, b->index, INT_MAX, target_pos);
+        b->target_pos = target_pos;
+        b = b->next;
+    }
+}

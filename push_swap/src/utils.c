@@ -31,16 +31,16 @@ void free_stack(node_stack **stack)
     }
     *stack = NULL;
 }
-void show_stack(node_stack *stack)
-{
-    node_stack *temp;
-    temp = stack;
-    while (temp)
-    {
-        printf("Value: %d | Index: %d | pos: %d\n", temp->v, temp->index, temp->position);
-        temp = temp->next;
-    }
-}
+// void show_stack(node_stack *stack)
+// {
+//     node_stack *temp;
+//     temp = stack;
+//     while (temp)
+//     {
+//         printf("Value: %d | Index: %d | pos: %d\n", temp->v, temp->index, temp->position);
+//         temp = temp->next;
+//     }
+// }
 
 void show_error_and_free(node_stack **stack)
 {

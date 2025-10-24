@@ -6,10 +6,6 @@
 #include <stdlib.h>
 #include <limits.h>
 
-// =======================
-// === ESTRUTURAS ========
-// =======================
-
 typedef struct s_stack
 {
     int v;
@@ -22,9 +18,6 @@ typedef struct s_stack
     int target_pos;
 } node_stack;
 
-// =======================
-// === FUNCOES ===========
-// =======================
 int ft_atoi(const char *str, node_stack **stack);
 void verify_duplicate(node_stack **stack, int value);
 void add_index(node_stack *stack_a, int size);
@@ -34,7 +27,7 @@ void show_error_and_free(node_stack **stack);
 void show_error();
 void parse_args(node_stack **stack, int n_args, char **args);
 int find_min_value_with_no_index(node_stack **stack);
-void show_stack(node_stack *stack);
+// void show_stack(node_stack *stack);
 int is_sorted(node_stack *stack);
 void push_swap(node_stack **stack_a, node_stack **stack_b);
 void sa(node_stack **stack_a);
@@ -44,9 +37,7 @@ void rotate_move(node_stack **sa, node_stack **sb, char *choice);
 void sorted_three_elements(node_stack **stack);
 int find_max_index(node_stack *stack);
 
-
 void move_best_cust(node_stack **stack_a, node_stack **stack_b);
-// void put_min_to_top(node_stack **stack_a);
 void set_cust(node_stack **stack_a, node_stack **stack_b);
 void move_back_to_stack_a(node_stack **stack_a, node_stack **stack_b);
 void put_target_pos(node_stack **stack_a, node_stack **stack_b);
@@ -54,5 +45,5 @@ int get_target_position(node_stack **stack_a, int index, int max_index, int targ
 void get_stack_positions(node_stack **stack);
 int absolute_value(int n);
 int ft_strcmp(const char *s1, const char *s2);
-void	ft_putstr(char *s);
+void ft_putstr(char *s);
 #endif
