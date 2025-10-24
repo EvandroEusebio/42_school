@@ -1,98 +1,114 @@
 #include "../includes/push_swap.h"
 
-int insert_start(List **list, int v, int index)
+int insert_end(node_stack **stack, int v, int index)
 {
-    Node *n;
+    node_stack *new_node;
+    node_stack *temp;
 
-    n = (Node *)malloc(sizeof(Node));
-    if (!n)
+    new_node = (node_stack *)malloc(sizeof(node_stack));
+    if (!new_node)
         return (1);
-    if ((*list)->begin != NULL)
-        (*list)->begin->prev = n;
-    n->next = (*list)->begin;
-    (*list)->begin = n;
-    n->v = v;
-    n->index = index;
-    if ((*list)->last == NULL)
-        (*list)->last = n;
-    (*list)->total_elements++;
-    return (0);
-}
-
-int insert_end(List **list, int v, int index)
-{
-    Node *n;
-
-    if ((*list)->begin == NULL)
+    new_node->v = v;
+    new_node->index = index;
+    new_node->next = NULL;
+    new_node->cust_a = -1;
+    new_node->cust_b = -1;
+    new_node->position = -1;
+    new_node->target_pos = -1;
+    if (*stack == NULL)
+        *stack = new_node;
+    else
     {
-        insert_start(list, v, index);
-        return (0);
+        temp = *stack;
+        while (temp->next != NULL)
+            temp = temp->next;
+        temp->next = new_node;
     }
-    n = (Node *)malloc(sizeof(Node));
-    if (!n)
-        return (1);
-    n->prev = (*list)->last;
-    (*list)->last->next = n;
-    (*list)->last = n;
-    n->next = NULL;
-    n->v = v;
-    n->index = index;
-    (*list)->total_elements++;
-
     return (0);
 }
 
-void verify_duplicate_n(List **list, int number)
+void verify_duplicate(node_stack **stack, int value)
 {
-    Node *temp_node;
+    node_stack *temp_node;
 
-    temp_node = (*list)->begin;
-    while (temp_node != NULL)
+    temp_node = *stack;
+    while (temp_node)
     {
-        if (number == temp_node->v)
+        if (temp_node->v == value)
         {
-            printf("Duplicate value!\n");
-            show_error_and_free(list);
+            printf("Error\n");
+            exit(0);
         }
         temp_node = temp_node->next;
     }
 }
 
-void addIndex(List *stack)
+int find_min_value_with_no_index(node_stack **stack)
 {
-    int index;
-    Node *current_node;
-    Node *compare_node;
+    int min_index;
+    node_stack *temp;
+    int min_position;
 
-    current_node = stack->begin;
-    while (current_node)
+    if (!stack)
+        return (-1);
+
+    min_index = INT_MAX;
+    temp = *stack;
+    get_stack_positions(stack);
+
+    min_position = temp->position;
+    while (temp)
     {
-        index = 0;
-        compare_node = stack->begin;
-        while (compare_node)
+        if (temp->index < min_index)
         {
-            if (compare_node->v < current_node->v)
-                index++;
-            compare_node = compare_node->next;
+            min_index = temp->index;
+            min_position = temp->position;
         }
-        current_node->index = index;
-        current_node = current_node->next;
+        temp = temp->next;
+    }
+    return (min_position);
+}
+
+void add_index(node_stack *stack_a, int size)
+{
+    node_stack *temp_stack;
+    node_stack *max_address;
+    int max_n;
+
+    while (size--)
+    {
+        temp_stack = stack_a;
+        max_n = INT_MIN;
+        max_address = NULL;
+        while (temp_stack)
+        {
+            if (temp_stack->v == INT_MIN && temp_stack->index == 0)
+                temp_stack->index = 1;
+            else if (temp_stack->v > max_n && temp_stack->index == 0)
+            {
+                max_n = temp_stack->v;
+                max_address = temp_stack;
+                temp_stack = stack_a;
+            }
+            else
+                temp_stack = temp_stack->next;
+        }
+        if (max_address)
+            max_address->index = size + 1;
     }
 }
 
-void parsing_stack(List *stack, char **args)
+void parse_args(node_stack **stack, int n_args, char **args)
 {
-    int n;
     int i;
+    int value;
 
-    i = 0;
-    while (*(++args))
+    i = 1;
+    while (i < n_args)
     {
-        n = ft_atoi(*args, &stack);
-        verify_duplicate_n(&stack, n);
-        insert_end(&stack, n, 0);
+        value = atoi(args[i]);
+        verify_duplicate(stack, value);
+        insert_end(stack, value, 0);
         i++;
     }
-    set_pos(stack);
-    return;
 }

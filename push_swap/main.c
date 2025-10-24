@@ -1,33 +1,19 @@
 #include "includes/push_swap.h"
 
-// void showPos(List list)
-// {
-//     Node *node;
-
-//     node = list.begin;
-//     while (node != NULL)
-//     {
-//         printf("%d\n", node->pos);
-//         node = node->next;
-//     }
-// }
-
-
-
 int main(int n_args, char **args)
 {
-    List stack_A;
-    List stack_B;
-    inicialize(&stack_A);
-    inicialize(&stack_B);
-    if (n_args > 1)
-        parsing_stack(&stack_A, args);
-    else
-        show_error();
-    addIndex(&stack_A);
-    push_swap(&stack_A, &stack_B);
+    node_stack *stack_a;
+    node_stack *stack_b;
+    stack_a = NULL;
+    stack_b = NULL;
+    if (n_args < 2)
+        return (0);
+    parse_args(&stack_a, n_args, args);
+    add_index(stack_a, get_size(stack_a));
 
-    free_stack(&stack_A);
-    free_stack(&stack_B);
+    push_swap(&stack_a, &stack_b);
+
+    free_stack(&stack_a);
+    free_stack(&stack_b);
     return (n_args);
 }

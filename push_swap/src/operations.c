@@ -1,145 +1,109 @@
 #include "../includes/push_swap.h"
 
-void swap_A(List *stack_A)
+
+void sa(node_stack **stack_a)
 {
-    int temp_v;
-    if (stack_A->begin == NULL)
+    int temp;
+
+    if (!stack_a || !*stack_a || !(*stack_a)->next)
         return;
-    else if (stack_A->total_elements == 1)
-        return;
-    temp_v = stack_A->begin->v;
-    stack_A->begin->v = stack_A->begin->next->v;
-    stack_A->begin->next->v = temp_v;
-    set_pos(stack_A);
+
+    temp = (*stack_a)->index;
+    (*stack_a)->index = (*stack_a)->next->index;
+    (*stack_a)->next->index = temp;
+    (*stack_a)->v = (*stack_a)->next->v;
+    (*stack_a)->next->v = temp;
 
     printf("sa\n");
 }
 
-void swap_B(List *stack_B)
-{
-    int temp_v;
-    if (stack_B->begin == NULL)
-        return;
-    else if (stack_B->total_elements == 1)
-        return;
-    temp_v = stack_B->begin->v;
-    stack_B->begin->v = stack_B->begin->next->v;
-    stack_B->begin->next->v = temp_v;
-    set_pos(stack_B);
-    printf("sb\n");
-}
 
-void swap_A_B(List *stack_A, List *stack_B)
+void pa(node_stack **stack_a, node_stack **stack_b)
 {
-    if (stack_B->begin == NULL || stack_A->begin == NULL)
-        return;
-    else if (stack_B->total_elements == 1 || stack_A->total_elements == 1)
-        return;
-    swap_A(stack_A);
-    swap_B(stack_B);
-    printf("ss\n");
-}
+    node_stack *node_to_move;
 
-void push_B(List *stack_A, List *stack_B)
-{
-    Node *temp_node;
-    if (stack_A->begin == NULL)
+    if (!stack_b || !*stack_b)
         return;
-    insert_start(&stack_B, stack_A->begin->v, stack_A->begin->index);
-    temp_node = stack_A->begin->next;
-    free(stack_A->begin);
-    stack_A->begin = NULL;
-    stack_A->total_elements--;
-    stack_A->begin = temp_node;
-    if (stack_A->begin != NULL)
-        stack_A->begin->prev = NULL;
-    else
-        stack_A->last = NULL;
-    set_pos(stack_B);
-    set_pos(stack_A);
-    printf("pb\n");
-}
 
-void push_A(List *stack_A, List *stack_B)
-{
-    Node *temp_node;
-    if (stack_B->begin == NULL)
-        return;
-    insert_start(&stack_A, stack_B->begin->v, stack_B->begin->index);
-    temp_node = stack_B->begin->next;
-    free(stack_B->begin);
-    stack_B->begin = NULL;
-    stack_B->total_elements--;
-    stack_B->begin = temp_node;
-    if (stack_B->begin != NULL)
-        stack_B->begin->prev = NULL;
-    else
-        stack_B->last = NULL;
-    set_pos(stack_A);
-    set_pos(stack_B);
+    node_to_move = *stack_b;
+    *stack_b = (*stack_b)->next;
+
+    node_to_move->next = *stack_a;
+    *stack_a = node_to_move;
+
     printf("pa\n");
 }
 
-// r
-void rotate(List *stack_A, char type_stack)
+void pb(node_stack **stack_a, node_stack **stack_b)
 {
-    Node *temp_node_head;
-    Node *temp_node_last;
+    node_stack *node_to_move;
 
-    if (stack_A->total_elements <= 1)
+    if (!stack_a || !*stack_a)
         return;
-    temp_node_head = stack_A->begin;
-    temp_node_last = stack_A->last;
 
-    stack_A->begin = stack_A->begin->next;
-    stack_A->begin->prev = NULL;
-    stack_A->last = temp_node_head;
-    stack_A->last->next = NULL;
-    stack_A->last->prev = temp_node_last;
-    temp_node_last->next = temp_node_head;
-    if (type_stack)
-        printf("r%c\n", type_stack);
-    set_pos(stack_A);
+    node_to_move = *stack_a;
+    *stack_a = (*stack_a)->next;
+
+    node_to_move->next = *stack_b;
+    *stack_b = node_to_move;
+
+    printf("pb\n");
 }
 
-// r->dupla
-void rotate_r(List *stack_A, List *stack_B)
+
+
+static void	reverse(node_stack **top)
 {
-    rotate(stack_A, 0);
-    rotate(stack_B, 0);
-    printf("rr\n");
+	node_stack	*ex_top;
+	node_stack	*new_bottom;
+	node_stack	*ex_bottom;
+
+	ex_bottom = *top;
+	new_bottom = *top;
+	ex_top = *top;
+	while (ex_bottom->next)
+		ex_bottom = ex_bottom->next;
+	while (new_bottom->next->next)
+		new_bottom = new_bottom->next;
+	*top = ex_bottom;
+	(*top)->next = ex_top;
+	new_bottom->next = NULL;
 }
 
-// rr
-void reverse_rotate(List *stack, char type_stack)
+static void	rotate(node_stack **top)
 {
-    Node *temp_node_head;
-    Node *temp_node_last;
+	node_stack	*ex_top;
+	node_stack	*bottom;
 
-    if (stack->total_elements <= 1)
-    {
-        printf("Stack_A Empty!\n");
-        return;
-    }
-    temp_node_head = stack->begin;
-    temp_node_last = stack->last;
-    // swap last with second_last
-    stack->last = stack->last->prev;
-    stack->last->next = NULL;
-    // swap old last for old first
-    stack->begin = temp_node_last;
-    stack->begin->next = temp_node_head;
-    stack->begin->prev = NULL;
-    temp_node_head->prev = temp_node_last;
-    if (type_stack)
-        printf("rr%c\n", type_stack);
-    set_pos(stack);
+	ex_top = *top;
+	*top = (*top)->next;
+	bottom = *top;
+	while (bottom->next)
+		bottom = bottom->next;
+	ex_top->next = NULL;
+	bottom->next = ex_top;
 }
 
-// rrr-> dupla
-void reverse_rotate_r(List *stack_A, List *stack_B)
+void	rotate_move(node_stack **sa, node_stack **sb, char *choice)
 {
-    reverse_rotate(stack_A, 0);
-    reverse_rotate(stack_B, 0);
-    printf("rrr\n");
+	if (ft_strcmp(choice, "ra") == 0)
+		rotate(sa);
+	else if (ft_strcmp(choice, "rb") == 0)
+		rotate(sb);
+	else if (ft_strcmp(choice, "rr") == 0)
+	{
+		rotate(sa);
+		rotate(sb);
+	}
+	else if (ft_strcmp(choice, "rra") == 0)
+		reverse(sa);
+	else if (ft_strcmp(choice, "rrb") == 0)
+		reverse(sb);
+	else if (ft_strcmp(choice, "rrr") == 0)
+	{
+		reverse(sa);
+		reverse(sb);
+	}
+	ft_putstr(choice);
+	ft_putstr("\n");
 }

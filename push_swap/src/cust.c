@@ -1,56 +1,25 @@
 #include "../includes/push_swap.h"
 
-void get_cust_top(int size, Node *n)
-{
-    if (n->pos <= size / 2)
-        n->cust_b = n->pos;
-    else
-        n->cust_b = (size - n->pos) * -1;
-}
 
-void get_cust_top_target(List stack_a, Node *n)
+void set_cust(node_stack **stack_a, node_stack **stack_b)
 {
-    if (n->target_pos <= stack_a.total_elements / 2)
-        n->cust_a = n->target_pos;
-    else
-        n->cust_a = (stack_a.total_elements - n->target_pos) * -1;
-}
+    node_stack *temp_b;
+    node_stack *temp_a;
+    int size_a;
+    int size_b;
 
-void set_total_cust(Node *n)
-{
-    if ((n->cust_a < 0 && n->cust_b < 0) || (n->cust_a > 0 && n->cust_b > 0))
-        n->total_cust = (absolute_value(max_value(n->cust_a, n->cust_b)));
-    else
-        n->total_cust = absolute_value(n->cust_a) + absolute_value(n->cust_b);
-}
-
-void set_cust(List *stack_a, List *stack_b)
-{
-    Node *temp_node_b;
-
-    temp_node_b = stack_b->begin;
-    while (temp_node_b)
+    temp_b = *stack_b;
+    temp_a = *stack_a;
+    size_a = get_size(temp_a);
+    size_b = get_size(temp_b);
+    while (temp_b)
     {
-        get_cust_top(stack_b->total_elements, temp_node_b);
-        get_target_pos(stack_a, temp_node_b->index, temp_node_b);
-        get_cust_top_target(*stack_a, temp_node_b);
-        set_total_cust(temp_node_b);
-        temp_node_b = temp_node_b->next;
+        temp_b->cust_b = temp_b->position;
+        if (temp_b->position > size_b / 2)
+            temp_b->cust_b = (size_b - temp_b->position) * -1;
+        temp_b->cust_a = temp_b->target_pos;
+        if (temp_b->target_pos > size_a / 2)
+            temp_b->cust_a = (size_a - temp_b->target_pos) * -1;
+        temp_b = temp_b->next;
     }
-}
-
-void put_min_top(List *stack)
-{
-    int min_index = find_min_index(*stack);
-    int cust_top_min = get_pos(*stack, min_index);
-
-    if (cust_top_min > stack->total_elements / 2)
-        cust_top_min = (stack->total_elements - cust_top_min) * -1;
-
-    if (cust_top_min > 0)
-        while (cust_top_min--)
-            rotate(stack, 'a');
-    else
-        while (cust_top_min++)
-            reverse_rotate(stack, 'a');
 }

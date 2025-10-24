@@ -1,48 +1,42 @@
 #include "../includes/push_swap.h"
 
-void to_stack_b(List *stack_a, List *stack_b)
-{
-    int i;
-    int total_push;
-    int total_elements;
-    i = 0;
 
-    total_push = 0;
-    total_elements = stack_a->total_elements;
-    while (total_elements > 6 && i < total_elements && total_push < total_elements / 2)
+void move_to_stack_b(node_stack **stack_a, node_stack **stack_b)
+{
+    int size;
+    int pushed;
+    int i;
+
+    size = get_size(*stack_a);
+    pushed = 0;
+    i = 0;
+    while (size > 6 && i < size && pushed < size / 2)
     {
-        if (stack_a->begin->index < total_elements / 2)
+        if ((*stack_a)->index <= size / 2)
         {
-            push_B(stack_a, stack_b);
-            total_push++;
+            pb(stack_a, stack_b);
+            pushed++;
         }
         else
-            rotate(stack_a, 'a');
+            rotate_move(stack_a, NULL, "ra");
         i++;
     }
-    while (stack_a->total_elements - total_push > 3)
+    while (size - pushed > 3)
     {
-        push_B(stack_a, stack_b);
-        total_push++;
+        pb(stack_a, stack_b);
+        pushed++;
     }
 }
 
-void push_swap(List *stack_a, List *stack_b)
+void push_swap(node_stack **stack_a, node_stack **stack_b)
 {
-    if (is_sorted(*stack_a) == 1)
+    if(is_sorted(*stack_a))
         return;
-    if (stack_a->total_elements == 2)
-    {
-        swap_A(stack_a);
-        return;
-    }
-    if (stack_a->total_elements == 3)
-    {
-        sorted_tree_elements(stack_a);
-        return;
-    }
-    to_stack_b(stack_a, stack_b);
-    if (is_sorted(*stack_a) == 0)
-        sorted_tree_elements(stack_a);
-    move_back(stack_a, stack_b);
+    if (get_size(*stack_a) == 2)
+        sa(stack_a);
+    if (get_size(*stack_a) == 3)
+        sorted_three_elements(stack_a);
+    move_to_stack_b(stack_a, stack_b);
+    sorted_three_elements(stack_a);
+    move_back_to_stack_a(stack_a, stack_b);
 }
