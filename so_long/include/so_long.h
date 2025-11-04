@@ -12,10 +12,13 @@
 typedef struct s_game
 {
     char **map;
-    void *mlx;
+    void *mlx_ptr;
+    void *mlx_window;
+    int window_width;
+    int window_height;
 } t_game;
 
-
+void inicialize_game(t_game *game);
 char	*get_next_line(int fd);
 void store_map(t_game *game);
 char *ft_strcopy(char *dest, const char *src);
@@ -39,6 +42,11 @@ int is_sorrounded_walls();
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
+
+# ifndef TILE_SIZE
+#  define TILE_SIZE 64
+# endif
+
 
 # ifndef SOURCE_MAP
 #  define SOURCE_MAP "maps/map.ber"

@@ -7,7 +7,6 @@ void store_map(t_game *game)
     int i;
     int rows;
 
-    game->map = NULL;
     fd = ft_open_file(SOURCE_MAP);
 
     i = 0;
@@ -32,4 +31,20 @@ void store_map(t_game *game)
     }
     game->map[i] = NULL;
     close(fd);
+}
+
+void inicialize_game(t_game *game)
+{
+    game->window_width = (ft_strlen(game->map[0]) - 1) * TILE_SIZE;
+    game->window_height = get_quant_rows() * TILE_SIZE;
+
+    game->mlx_ptr = mlx_init();
+    if (!game->mlx_ptr)
+        ft_show_error("mlx init filed");
+
+    game->mlx_window = mlx_new_window(game->mlx_ptr, game->window_width, game->window_height, "Thank you Jesus!");
+    if (!game->mlx_window)
+        ft_show_error("mlx window filed");
+
+    mlx_loop(game->mlx_ptr);
 }
