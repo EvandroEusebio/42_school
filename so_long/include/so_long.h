@@ -9,7 +9,15 @@
 # include "../mlx/mlx.h"
 # include "../libft/libft.h"
 
+typedef struct s_game
+{
+    char **map;
+    void *mlx;
+} t_game;
+
+
 char	*get_next_line(int fd);
+void store_map(t_game *game);
 char *ft_strcopy(char *dest, const char *src);
 char	*ft_strcopy_limit(const char *str, int limit);
 int	ft_strlen_without_break(const char *str);

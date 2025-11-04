@@ -18,6 +18,7 @@ MLX = -L$(MLX_PATH) -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
 SRC = $(SRC_DIR)/utils.c \
       $(SRC_DIR)/$(MAP_DIR)/map_validations.c \
       $(SRC_DIR)/$(MAP_DIR)/map_utils.c \
+      $(SRC_DIR)/$(MAP_DIR)/map.c \
       $(SRC_DIR)/get_next_line.c \
       $(SRC_DIR)/main.c
 

@@ -192,7 +192,6 @@ int is_sorrounded_walls()
         close(fd);
         return (0);
     }
-
     free_buffer(lines_buffer);
     close(fd);
     return (1);
