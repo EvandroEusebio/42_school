@@ -9,6 +9,16 @@
 # include "../mlx/mlx.h"
 # include "../libft/libft.h"
 
+typedef struct s_sprites
+{
+    void *wall;
+    void *floor;
+    void *player;
+    void *exit;
+    void *collectible;
+}   t_sprites;
+
+
 typedef struct s_game
 {
     char **map;
@@ -16,8 +26,11 @@ typedef struct s_game
     void *mlx_window;
     int window_width;
     int window_height;
+    t_sprites sprites;
 } t_game;
 
+
+void render_map(t_game *game);
 void inicialize_game(t_game *game);
 char	*get_next_line(int fd);
 void store_map(t_game *game);
@@ -30,7 +43,6 @@ int ft_occur(char *str, char c);
 void validation_map();
 int ft_open_file(char *source);
 int get_quant_rows();
-char	*ft_strdup(const char *s);
 void free_buffer(char **buffer);
 int is_retangular();
 int has_allow_char();
@@ -44,7 +56,7 @@ int is_sorrounded_walls();
 # endif
 
 # ifndef TILE_SIZE
-#  define TILE_SIZE 64
+#  define TILE_SIZE 32
 # endif
 
 

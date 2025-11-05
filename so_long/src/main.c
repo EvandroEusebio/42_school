@@ -17,6 +17,16 @@ int main()
     store_map(game);
     // inicialize game window
     inicialize_game(game);
+    // draw components
+    render_map(game);
+
+    mlx_loop(game->mlx_ptr);
+
+    mlx_destroy_image(game->mlx_ptr, game->sprites.player);
+    mlx_destroy_image(game->mlx_ptr, game->sprites.collectible);
+    mlx_destroy_image(game->mlx_ptr, game->sprites.floor);
+    mlx_destroy_image(game->mlx_ptr, game->sprites.wall);
+    mlx_destroy_image(game->mlx_ptr, game->sprites.exit);
 
     free_buffer(game->map);
 

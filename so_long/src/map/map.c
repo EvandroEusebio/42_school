@@ -33,18 +33,30 @@ void store_map(t_game *game)
     close(fd);
 }
 
-void inicialize_game(t_game *game)
+void render_map(t_game *game)
 {
-    game->window_width = (ft_strlen(game->map[0]) - 1) * TILE_SIZE;
-    game->window_height = get_quant_rows() * TILE_SIZE;
+    int y;
+    int x;
 
-    game->mlx_ptr = mlx_init();
-    if (!game->mlx_ptr)
-        ft_show_error("mlx init filed");
-
-    game->mlx_window = mlx_new_window(game->mlx_ptr, game->window_width, game->window_height, "Thank you Jesus!");
-    if (!game->mlx_window)
-        ft_show_error("mlx window filed");
-
-    mlx_loop(game->mlx_ptr);
+    y = 0;
+    x = 0;
+    while (y < game->window_height)
+    {
+        x = 0;
+        while (x < game->window_width)
+        {
+            if (game->map[y][x] == '1')
+                mlx_put_image_to_window(game->mlx_ptr, game->mlx_window, game->sprites.wall, x * TILE_SIZE, y * TILE_SIZE);
+            if (game->map[y][x] == 'P')
+                mlx_put_image_to_window(game->mlx_ptr, game->mlx_window, game->sprites.player, x * TILE_SIZE, y * TILE_SIZE);
+            if (game->map[y][x] == 'C')
+                mlx_put_image_to_window(game->mlx_ptr, game->mlx_window, game->sprites.collectible, x * TILE_SIZE, y * TILE_SIZE);
+            if (game->map[y][x] == '0')
+                mlx_put_image_to_window(game->mlx_ptr, game->mlx_window, game->sprites.floor, x * TILE_SIZE, y * TILE_SIZE);
+            if (game->map[y][x] == 'E')
+                mlx_put_image_to_window(game->mlx_ptr, game->mlx_window, game->sprites.exit, x * TILE_SIZE, y * TILE_SIZE);
+            x++;
+        }
+        y++;
+    }
 }

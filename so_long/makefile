@@ -19,6 +19,7 @@ SRC = $(SRC_DIR)/utils.c \
       $(SRC_DIR)/$(MAP_DIR)/map_validations.c \
       $(SRC_DIR)/$(MAP_DIR)/map_utils.c \
       $(SRC_DIR)/$(MAP_DIR)/map.c \
+      $(SRC_DIR)/$(GAME_DIR)/inicialize.c \
       $(SRC_DIR)/get_next_line.c \
       $(SRC_DIR)/main.c
 
