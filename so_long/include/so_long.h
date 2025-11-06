@@ -27,9 +27,14 @@ typedef struct s_game
     int window_width;
     int window_height;
     t_sprites sprites;
+    int player_x;
+    int player_y;
 } t_game;
 
 
+void move_player(char type_moviment, t_game *game);
+int close_game(t_game *game);
+int key_press(int keycode, t_game *game);
 void render_map(t_game *game);
 void inicialize_game(t_game *game);
 char	*get_next_line(int fd);
@@ -51,17 +56,17 @@ int check_walls(char **lines_buffer);
 char	*ft_join(char *str1, char *str2);
 int is_sorrounded_walls();
 
-# ifndef BUFFER_SIZE
+
 #  define BUFFER_SIZE 42
-# endif
-
-# ifndef TILE_SIZE
 #  define TILE_SIZE 32
-# endif
-
-
-# ifndef SOURCE_MAP
 #  define SOURCE_MAP "maps/map.ber"
-# endif
+
+# define MLX_KEY_PRESS 2
+
+# define KEYPRESS_W 119
+# define KEYPRESS_A 97
+# define KEYPRESS_S 115
+# define KEYPRESS_D 100
+# define ESC 65307
 
 #endif
