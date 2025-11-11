@@ -8,7 +8,6 @@ void load_images(t_game *game)
     game->sprites.player = mlx_xpm_file_to_image(game->mlx_ptr, "textures/p.xpm", &img_width, &img_height);
     if (!game->sprites.player)
         ft_show_error("Load Failed Image Player!");
-    // printf("Player: %d x %d\n", img_width, img_height);
     game->sprites.exit = mlx_xpm_file_to_image(game->mlx_ptr, "textures/e.xpm", &img_width, &img_height);
     if (!game->sprites.exit)
         ft_show_error("Load Failed Image Exit!");    
@@ -27,6 +26,7 @@ void inicialize_game(t_game *game)
 {
     game->window_width = ft_strlen(game->map[0]) - 1;
     game->window_height = get_quant_rows();
+    game->count_move = 0;
 
     game->mlx_ptr = mlx_init();
     if (!game->mlx_ptr)

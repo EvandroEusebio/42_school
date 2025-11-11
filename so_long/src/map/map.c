@@ -33,13 +33,32 @@ void store_map(t_game *game)
     close(fd);
 }
 
+int existType(char **map, char c)
+{
+    int x;
+    int y;
+
+    x = 0;
+    while(map[x])
+    {
+        y = 0;
+        while(map[x][y])
+        {
+            if(map[x][y] == c)
+                return (1);
+            y++;
+        }
+        x++;
+    }
+    return (0);
+}
+
 void render_map(t_game *game)
 {
     int y;
     int x;
 
     y = 0;
-    x = 0;
     while (y < game->window_height)
     {
         x = 0;

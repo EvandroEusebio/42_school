@@ -10,10 +10,14 @@ static void move(t_game *game, int dx, int dy)
     // adde order verify
     if (game->map[new_y][new_x] == '1')
         return ;
+    if (game->map[new_y][new_x] == 'E' && existType(game->map, 'C'))
+        return ;
     
     game->map[game->player_y][game->player_x] = '0';
     game->map[new_y][new_x] = 'P';
     render_map(game);
+    game->count_move++;
+    printf("Quant Move: %d\n", game->count_move);
 }
 
 void move_player(char type_moviment, t_game *game)

@@ -29,6 +29,7 @@ typedef struct s_game
     t_sprites sprites;
     int player_x;
     int player_y;
+    int count_move;
 } t_game;
 
 
@@ -55,6 +56,7 @@ int validade_quant_EPC();
 int check_walls(char **lines_buffer);
 char	*ft_join(char *str1, char *str2);
 int is_sorrounded_walls();
+int existType(char **map, char c);
 
 
 #  define BUFFER_SIZE 42
