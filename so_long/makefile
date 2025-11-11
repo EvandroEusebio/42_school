@@ -21,6 +21,8 @@ SRC = $(SRC_DIR)/utils.c \
       $(SRC_DIR)/$(MAP_DIR)/map.c \
       $(SRC_DIR)/$(GAME_DIR)/inicialize.c \
       $(SRC_DIR)/$(GAME_DIR)/events.c \
+      $(SRC_DIR)/$(GAME_DIR)/game.c \
+      $(SRC_DIR)/$(GRAPHIC_DIR)/render.c \
       $(SRC_DIR)/get_next_line.c \
       $(SRC_DIR)/main.c
 

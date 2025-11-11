@@ -34,7 +34,8 @@ typedef struct s_game
 
 
 void move_player(char type_moviment, t_game *game);
-int close_game(t_game *game);
+void close_window(t_game *game);
+void game_over(t_game *game);
 int key_press(int keycode, t_game *game);
 void render_map(t_game *game);
 void inicialize_game(t_game *game);

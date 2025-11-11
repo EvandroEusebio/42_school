@@ -12,7 +12,8 @@ static void move(t_game *game, int dx, int dy)
         return ;
     if (game->map[new_y][new_x] == 'E' && existType(game->map, 'C'))
         return ;
-    
+    if (game->map[new_y][new_x] == 'E' && !existType(game->map, 'C'))
+        game_over(game);
     game->map[game->player_y][game->player_x] = '0';
     game->map[new_y][new_x] = 'P';
     render_map(game);
@@ -32,12 +33,6 @@ void move_player(char type_moviment, t_game *game)
         move(game, 1, 0);
 }
 
-int close_game(t_game *game)
-{
-    mlx_destroy_window(game->mlx_ptr, game->mlx_window);
-    exit(0);
-    return (0);
-}
 
 int key_press(int keycode, t_game *game)
 {
@@ -50,6 +45,6 @@ int key_press(int keycode, t_game *game)
     if (keycode == KEYPRESS_S)
         move_player('D', game);
     if (keycode == ESC)
-        close_game(game);
+        close_window(game);
     return (0);
 }
