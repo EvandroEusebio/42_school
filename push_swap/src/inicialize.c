@@ -36,8 +36,8 @@ void verify_duplicate(node_stack **stack, int value)
     {
         if (temp_node->v == value)
         {
-            printf("Error\n");
-            exit(0);
+            ft_putstr("Error\n");
+            exit(2);
         }
         temp_node = temp_node->next;
     }
@@ -51,11 +51,9 @@ int find_min_value_with_no_index(node_stack **stack)
 
     if (!stack)
         return (-1);
-
     min_index = INT_MAX;
     temp = *stack;
     get_stack_positions(stack);
-
     min_position = temp->position;
     while (temp)
     {
@@ -100,15 +98,30 @@ void add_index(node_stack *stack_a, int size)
 
 void parse_args(node_stack **stack, int n_args, char **args)
 {
+    char **numbers;
     int i;
-    int value;
+    long value;
 
-    i = 1;
-    while (i < n_args)
+    if (n_args == 2)
+        numbers = ft_split(args[1], ' ');
+    else
+        numbers = args + 1;
+    i = 0;
+    while (numbers[i])
     {
-        value = atoi(args[i]);
+        value = ft_atoi(numbers[i]);
+        if (value > INT_MAX || value < INT_MIN)
+        {
+            if (n_args == 2)
+                free_buffer(numbers);
+            show_error_and_free(stack);
+        }
         verify_duplicate(stack, value);
         insert_end(stack, value, 0);
         i++;
     }
+    if (n_args == 2)
+        free_buffer(numbers);
 }
+
+

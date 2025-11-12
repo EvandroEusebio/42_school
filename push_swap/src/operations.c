@@ -14,7 +14,7 @@ void sa(node_stack **stack_a)
     (*stack_a)->v = (*stack_a)->next->v;
     (*stack_a)->next->v = temp;
 
-    printf("sa\n");
+    ft_putstr("sa\n");
 }
 
 
@@ -31,7 +31,7 @@ void pa(node_stack **stack_a, node_stack **stack_b)
     node_to_move->next = *stack_a;
     *stack_a = node_to_move;
 
-    printf("pa\n");
+    ft_putstr("pa\n");
 }
 
 void pb(node_stack **stack_a, node_stack **stack_b)
@@ -47,7 +47,7 @@ void pb(node_stack **stack_a, node_stack **stack_b)
     node_to_move->next = *stack_b;
     *stack_b = node_to_move;
 
-    printf("pb\n");
+    ft_putstr("pb\n");
 }
 
 

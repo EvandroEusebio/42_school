@@ -1,10 +1,11 @@
 #ifndef PUSH_SWAP_H
 #define PUSH_SWAP_H
 
-#include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <stddef.h>
+# include "../libft/libft.h"
 
 typedef struct s_stack
 {
@@ -18,7 +19,6 @@ typedef struct s_stack
     int target_pos;
 } node_stack;
 
-int ft_atoi(const char *str, node_stack **stack);
 void verify_duplicate(node_stack **stack, int value);
 void add_index(node_stack *stack_a, int size);
 void free_stack(node_stack **stack);
@@ -27,7 +27,6 @@ void show_error_and_free(node_stack **stack);
 void show_error();
 void parse_args(node_stack **stack, int n_args, char **args);
 int find_min_value_with_no_index(node_stack **stack);
-// void show_stack(node_stack *stack);
 int is_sorted(node_stack *stack);
 void push_swap(node_stack **stack_a, node_stack **stack_b);
 void sa(node_stack **stack_a);
@@ -46,4 +45,6 @@ void get_stack_positions(node_stack **stack);
 int absolute_value(int n);
 int ft_strcmp(const char *s1, const char *s2);
 void ft_putstr(char *s);
+void free_buffer(char **buffer);
+
 #endif

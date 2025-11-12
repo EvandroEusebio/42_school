@@ -1,28 +1,46 @@
 NAME_EXECUTABLE = push_swap
 
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 SRC_DIR = src
 OBJ_DIR = obj
-INCLUDE_DIR = include
+INCLUDE_DIR = includes/push_swap.h
+LIBFT_DIR = libft
+LIBFT = $(LIBFT_DIR)/libft.a
 
-SRC = $(SRC_DIR)/cust.c $(SRC_DIR)/operations.c  $(SRC_DIR)/push_swap.c $(SRC_DIR)/position.c $(SRC_DIR)/stacks.c $(SRC_DIR)/utils.c  $(SRC_DIR)/sort.c $(SRC_DIR)/move_back.c $(SRC_DIR)/moves.c $(SRC_DIR)/main.c
+SRC = $(SRC_DIR)/cust.c $(SRC_DIR)/operations.c $(SRC_DIR)/stack.c \
+      $(SRC_DIR)/push_swap.c $(SRC_DIR)/position.c $(SRC_DIR)/utils.c \
+      $(SRC_DIR)/sort.c $(SRC_DIR)/move_back.c $(SRC_DIR)/moves.c \
+      $(SRC_DIR)/inicialize.c $(SRC_DIR)/main.c
 
-OBJ = $(OBJ_DIR)/cust.o $(OBJ_DIR)/operations.o $(OBJ_DIR)/push_swap.o $(OBJ_DIR)/inicialize.o $(OBJ_DIR)/utils.o $(OBJ_DIR)/sort.o $(OBJ_DIR)/move_back.o $(OBJ_DIR)/position.o $(OBJ_DIR)/moves.o $(OBJ_DIR)/main.o
+OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 all: $(NAME_EXECUTABLE)
 
-$(NAME_EXECUTABLE): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME_EXECUTABLE)
+
+
+$(NAME_EXECUTABLE): $(OBJ) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME_EXECUTABLE)
+
+
+$(OBJ): $(INCLUDE_DIR)
+
+$(LIBFT):
+	make -C $(LIBFT_DIR)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) $(CFLAGS) -I$(INCLUDE_DIR) -c $< -o $@
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+
 
 clean:
-	rm -f $(OBJ)
+	rm -rf $(OBJ_DIR)
+	make -C $(LIBFT_DIR) clean
 
 fclean: clean
 	rm -f $(NAME_EXECUTABLE)
+	make -C $(LIBFT_DIR) fclean
 
 re: fclean all

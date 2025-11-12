@@ -1,22 +1,5 @@
 #include "../includes/push_swap.h"
 
-int is_sorted(node_stack *stack)
-{
-    node_stack *temp;
-
-    if (!stack)
-        return 1;
-
-    temp = stack;
-    while (temp->next)
-    {
-        if (temp->v > temp->next->v)
-            return 0;
-        temp = temp->next;
-    }
-    return 1;
-}
-
 void sorted_three_elements(node_stack **stack)
 {
     int max_value;
