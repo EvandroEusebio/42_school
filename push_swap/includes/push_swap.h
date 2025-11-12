@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <stddef.h>
-# include "../libft/libft.h"
+#include "../libft/libft.h"
 
 typedef struct s_stack
 {
@@ -24,7 +24,6 @@ void add_index(node_stack *stack_a, int size);
 void free_stack(node_stack **stack);
 int get_size(node_stack *stack);
 void show_error_and_free(node_stack **stack);
-void show_error();
 void parse_args(node_stack **stack, int n_args, char **args);
 int find_min_value_with_no_index(node_stack **stack);
 int is_sorted(node_stack *stack);

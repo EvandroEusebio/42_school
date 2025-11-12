@@ -1,19 +1,16 @@
 #include "../includes/push_swap.h"
 
-
 void sa(node_stack **stack_a)
 {
     int temp;
 
     if (!stack_a || !*stack_a || !(*stack_a)->next)
         return;
-
     temp = (*stack_a)->index;
     (*stack_a)->index = (*stack_a)->next->index;
     (*stack_a)->next->index = temp;
     (*stack_a)->v = (*stack_a)->next->v;
     (*stack_a)->next->v = temp;
-
     ft_putstr("sa\n");
 }
 
@@ -24,13 +21,10 @@ void pa(node_stack **stack_a, node_stack **stack_b)
 
     if (!stack_b || !*stack_b)
         return;
-
     node_to_move = *stack_b;
     *stack_b = (*stack_b)->next;
-
     node_to_move->next = *stack_a;
     *stack_a = node_to_move;
-
     ft_putstr("pa\n");
 }
 
@@ -40,13 +34,10 @@ void pb(node_stack **stack_a, node_stack **stack_b)
 
     if (!stack_a || !*stack_a)
         return;
-
     node_to_move = *stack_a;
     *stack_a = (*stack_a)->next;
-
     node_to_move->next = *stack_b;
     *stack_b = node_to_move;
-
     ft_putstr("pb\n");
 }
 

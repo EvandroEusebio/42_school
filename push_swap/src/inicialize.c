@@ -35,10 +35,7 @@ void verify_duplicate(node_stack **stack, int value)
     while (temp_node)
     {
         if (temp_node->v == value)
-        {
-            ft_putstr("Error\n");
-            exit(2);
-        }
+            show_error_and_free(stack);
         temp_node = temp_node->next;
     }
 }

@@ -25,7 +25,6 @@ void	put_min_to_top(node_stack **sa)
 
 void move_back_to_stack_a(node_stack **stack_a, node_stack **stack_b)
 {
-
     while (*stack_b)
     {
         put_target_pos(stack_a, stack_b);
