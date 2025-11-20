@@ -1,198 +1,103 @@
 #include "../../include/so_long.h"
 
-int get_quant_rows()
-{
-    char *line_read;
-    int fd;
+int get_quant_rows(char **map)
+{    
     int quant_rows;
+    int i;
 
-    line_read = NULL;
-    fd = ft_open_file(SOURCE_MAP);
     quant_rows = 0;
-    while ((line_read = get_next_line(fd)))
+    i = 0;
+    while (map[i])
     {   
         quant_rows++;
-        free(line_read);
-        line_read = NULL;
+        i++;
     }
-    close(fd);
     return (quant_rows);
 }
 
 
-int is_retangular()
-{
-    int len_line;
-    char *line_read;
-    int first_loop;
-    int fd;
-
-    first_loop = 0;
-    line_read = NULL;
-    fd = ft_open_file(SOURCE_MAP);
-    while ((line_read = get_next_line(fd)))
-    {
-        if (!first_loop)
-        {
-            len_line = ft_strlen_without_break(line_read);
-            first_loop = 1;
-        }
-        if (ft_strlen_without_break(line_read) != len_line)
-        {
-            close(fd);
-            free(line_read);
-            return (0);
-        }
-        free(line_read);
-        line_read = NULL;
-    }
-    if (!first_loop && !line_read)
-    {
-        close(fd);
-        return (0);
-    }
-    close(fd);
-    return (1);
-}
-
-int has_allow_char()
+int is_retangular(char **map)
 {
     int i;
-    char *line_read;
-    int fd;
+    int ref_len;
 
-    line_read = NULL;
-    fd = ft_open_file(SOURCE_MAP);
-    while ((line_read = get_next_line(fd)))
+    if (!map || !map[0]) 
+        return (0);
+    ref_len = ft_strlen_without_break(map[0]);
+    i = 1;
+    while (map[i])
     {
-        i = 0;
-        while (line_read[i] && line_read[i] != '\n')
-        {
-            if (line_read[i] != '0' && line_read[i] != '1' && line_read[i] != 'C' && line_read[i] != 'E' && line_read[i] != 'P')
-            {
-                close(fd);
-                free(line_read);
-                return (0);
-            }
-            i++;
-        }
-        free(line_read);
-        line_read = NULL;
+        if (ft_strlen_without_break(map[i]) != ref_len)
+            return (0);
+        i++;
     }
-    close(fd);
     return (1);
 }
 
-int validade_quant_EPC()
+int has_allow_char(char **map)
 {
-    char *line_read;
+    int i;
+    int k;
+
+    i = 0;
+    while (map[i])
+    {
+        k = 0;
+        while (map[i][k] && map[i][k] != '\n')
+        {
+            if (map[i][k] != '0' && map[i][k] != '1' && map[i][k] != 'C'
+                && map[i][k] != 'E' && map[i][k] != 'P')
+                return (0);
+            k++;
+        }
+        i++;
+    }
+    return (1);
+}
+
+int validade_quant_EPC(char **map)
+{
     int cont_E;
     int cont_P;
     int cont_C;
-    int fd;
+    int i;
 
     cont_E = 0;
     cont_P = 0;
     cont_C = 0;
-    line_read = NULL;
-    fd = ft_open_file(SOURCE_MAP);
-    while ((line_read = get_next_line(fd)))
+    i = 0;
+    while (map[i])
     {
-        cont_E += ft_occur(line_read, 'E');
-        cont_P += ft_occur(line_read, 'P');
-        cont_C += ft_occur(line_read, 'C');
-        free(line_read);
-        line_read = NULL;
+        cont_E += ft_occur(map[i], 'E');
+        cont_P += ft_occur(map[i], 'P');
+        cont_C += ft_occur(map[i], 'C');
+        i++;
     }
     if (cont_E != 1 || cont_P != 1 || cont_C < 1)
-    {
-        close(fd);
         return (0);
-    }
-    close(fd);
     return (1);
 }
 
-int check_walls(char **lines_buffer)
+int check_walls(char **map)
 {
-    int i;
-    int k;
+    int y;
+    int x;
     int rows;
-    int pos_break_line;
+    int cols;
 
-    rows = get_quant_rows();
-    i = 0;
-    while (lines_buffer[i])
+    rows = get_quant_rows(map);
+    cols = ft_strlen_without_break(map[0]);
+    y = -1;
+    while(++y < rows)
     {
-        k = 0;
-        if (i == 0)
-        {
-            while (lines_buffer[i][k] && lines_buffer[i][k] != '\n')
-            {
-                if (lines_buffer[i][k] != '1')
-                    return (0);
-                k++;
-            }
-        }
-        else if (i > 0 && i < rows - 1)
-        {
-            pos_break_line = ft_strchr(lines_buffer[i], '\n');
-            if (lines_buffer[i][0] != '1' || lines_buffer[i][pos_break_line - 1] != '1')
-                return (0);
-        }
-        else
-        {
-            while (lines_buffer[i][k])
-            {
-                if (lines_buffer[i][k] != '1')
-                    return (0);
-                k++;
-            }
-        }
-        i++;
-    }
-    return (1);
-}
-
-int is_sorrounded_walls()
-{
-    char *line_read;
-    char **lines_buffer;
-    int fd;
-    int i;
-    int rows;
-
-    line_read = NULL;
-    fd = ft_open_file(SOURCE_MAP);
-
-    i = 0;
-    rows = get_quant_rows();
-    lines_buffer = (char **)malloc((rows + 1) * sizeof(char *));
-    if (!lines_buffer)
-    {
-        close(fd);
-        return (0);
-    }
-    while ((line_read = get_next_line(fd)))
-    {
-        lines_buffer[i] = ft_strdup(line_read);
-        if (!lines_buffer[i])
-        {
-            close(fd);
+        if (map[y][0] != '1' || map[y][cols - 1] != '1')
             return (0);
-        }
-        i++;
-        free(line_read);
-        line_read = NULL;
     }
-    lines_buffer[i] = NULL;
-    if (!check_walls(lines_buffer))
+    x = -1;
+    while(++x < cols)
     {
-        free_buffer(lines_buffer);
-        close(fd);
-        return (0);
+        if (map[0][x] != '1' || map[rows - 1][x] != '1')
+            return (0);
     }
-    free_buffer(lines_buffer);
-    close(fd);
     return (1);
 }
