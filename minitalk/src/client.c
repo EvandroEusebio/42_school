@@ -62,12 +62,32 @@ static char **cripyto_msg(char *message)
     return (message_bit);
 }
 
+void send_message(int pid, char **message)
+{
+    int i;
+    int k;
+
+    i = 0;
+    while (message[i])
+    {
+        k = 0;
+        while (message[i][k])
+        {
+            if (message[i][k] == '1')
+                kill(pid, SIGUSR1);
+            if (message[i][k] == '0')
+                kill(pid, SIGUSR2);
+            usleep(100000);
+            k++;
+        }
+        i++;
+    }
+}
 
 int main(int total_args, char **args)
 {
     int pid;
     char **cripyto_message;
-    int i;
     if (!is_validate_args(total_args, args))
     {
         printf("Error, Invalid args");
@@ -75,14 +95,7 @@ int main(int total_args, char **args)
     }
     pid = ft_atoi(args[1]);
     cripyto_message = cripyto_msg(args[2]);
-    i = 0;
-    printf("PID: %d\n", pid);
-    printf("MESSAGE: %s\n", args[2]);
-    while (cripyto_message[i])
-    {
-        printf("%s -> ", cripyto_message[i]);
-        i++;
-    }
+    send_message(pid, cripyto_message);
     free_buffer(cripyto_message);
     return (0);
 }

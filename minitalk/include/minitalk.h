@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "../libft/libft.h"
+#include <sys/types.h>
 
 
 void free_buffer(char **buffer);
