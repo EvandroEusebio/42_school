@@ -1,4 +1,7 @@
-NAME=minitalk.a
+SERVER = server.a
+CLIENT = client.a
+
+NAME= minitalk
 CC = cc
 INCLUDE_DIR = include
 OBJ_DIR = obj
@@ -7,9 +10,11 @@ SRC_DIR = src
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
-SRCS = $(SRC_DIR)/client.c $(SRC_DIR)/server.c
+SRCS_CLIENT = $(SRC_DIR)/client.c $(SRC_DIR)/utils.c
+SRCS_SERVER = $(SRC_DIR)/server.c $(SRC_DIR)/utils.c
 
-OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+OBJS_CLIENT= $(SRCS_CLIENT:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+OBJS_SERVER = $(SRCS_SERVER:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -I$(INCLUDE_DIR) -c $< -o $@
@@ -19,19 +24,24 @@ all:  $(OBJ_DIR) $(NAME)
 $(OBJ_DIR): 
 	mkdir -p obj
 
-$(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+$(NAME): $(CLIENT) $(SERVER)
+
+$(SERVER): $(OBJS_SERVER) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJS_SERVER) $(LIBFT) -o $(SERVER)
+
+$(CLIENT): $(OBJS_CLIENT) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJS_CLIENT) $(LIBFT) -o $(CLIENT)	
 
 $(LIBFT):
 	make -C $(LIBFT_DIR)
 
 clean:
-	rm -rf $(OBJS)
 	make -C $(LIBFT_DIR) clean
 	rm -rf obj
 
 fclean: clean
-	rm -rf $(NAME)
+	rm -rf $(CLIENT)
+	rm -rf $(SERVER)
 	make -C $(LIBFT_DIR) fclean
 
 re: fclean all
