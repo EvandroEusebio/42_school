@@ -77,7 +77,7 @@ void send_message(int pid, char **message)
                 kill(pid, SIGUSR1);
             if (message[i][k] == '0')
                 kill(pid, SIGUSR2);
-            usleep(100000);
+            usleep(50);
             k++;
         }
         i++;
