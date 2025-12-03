@@ -1,5 +1,5 @@
-SERVER = server.a
-CLIENT = client.a
+SERVER = server
+CLIENT = client
 
 NAME= minitalk
 CC = cc
