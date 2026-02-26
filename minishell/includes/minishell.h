@@ -8,10 +8,23 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <signal.h>
+
 # include "../libft/libft.h"
 
 
-// Protótipos vão vir aqui depois
+typedef struct s_shell
+{
+    int g_exit_status;
+    int g_in_child;
 
+} t_shell;
+
+extern t_shell g_shell;
+
+// Protótipos vão vir aqui depois
+ 
+
+void free_array(char **arr);
+void executor_comand(char *line);
 
 #endif
