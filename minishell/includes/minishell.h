@@ -26,5 +26,7 @@ extern t_shell g_shell;
 
 void free_array(char **arr);
 void executor_comand(char *line);
+char *find_comand_path(char *cmd);
+char **get_path_env();
 
 #endif
