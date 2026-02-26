@@ -4,7 +4,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -I includes
 
 SRC_DIR = srcs
-SRCS = main.c executor.c
+SRCS = main.c executor.c builtins.c env.c
 OBJ_DIR = obj
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 

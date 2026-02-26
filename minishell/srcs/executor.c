@@ -98,9 +98,7 @@ void executor_comand(char *line)
         cmd_path = find_comand_path(args[0]);
         if(!cmd_path)
         {
-            ft_putstr_fd("minishell: ", 2);
-            ft_putstr_fd(args[0], 2);
-            ft_putstr_fd(": command not found\n", 2);
+            printf("minishell: %s: command not found\n", args[0]);
             free_array(args);
             exit(127);
         }
