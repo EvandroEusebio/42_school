@@ -36,7 +36,10 @@ int     builtin_echo(char **args)
     }
     while(args[i])
     {
-        printf("%s", args[i]);
+        if(ft_strcmp(args[i], "$?") == 0)
+            printf("%d", g_shell.g_exit_status);
+        else
+            printf("%s", args[i]);
         if (args[i + 1])
             printf(" ");
         i++;
