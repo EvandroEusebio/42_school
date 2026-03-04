@@ -30,7 +30,7 @@ int main(int argc, char **argv, char **envp)
 
     while(1)
     {
-        line_read = readline("PROMPT > ");
+        line_read = readline("minishell> ");
         if(!line_read)
         {
             printf("exit\n");
@@ -43,7 +43,7 @@ int main(int argc, char **argv, char **envp)
             if(args)
             {
                 if(is_builtin(args[0]))
-                    g_shell.g_exit_status = execute_builtin(args);
+                    g_shell.g_exit_status = execute_builtin(args, g_shell.g_env_list);
                 else
                     executor_comand(line_read);
                 free_array(args);
