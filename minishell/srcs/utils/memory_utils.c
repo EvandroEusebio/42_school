@@ -1,23 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   memory_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akudiezo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/04 14:45:29 by akudiezo          #+#    #+#             */
-/*   Updated: 2026/03/04 14:47:52 by akudiezo         ###   ########.fr       */
+/*   Created: 2026/01/28 17:02:45 by akudiezo          #+#    #+#             */
+/*   Updated: 2026/01/28 17:02:52 by akudiezo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "./../../minishell.h"
 
-int	ft_strcmp(const char *s1, const char *s2)
+void	*ft_malloc(size_t size)
+{
+	void	*ptr;
+	
+	ptr = malloc(size);
+	if (!ptr)
+	{
+		perror("malloc");
+		exit(EXIT_FAILURE);
+	}
+	return (ptr);
+}
+
+void	free_array(char **array)
 {
 	int	i;
-
+	
+	if (!array)
+		return;
 	i = 0;
-	while (s1[i] && s2[i] && s1[i] == s2[i])
+	while (array[i])
+	{
+		free(array[i]);
 		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	}
+	free(array);
+}
+
+void	exit_with_error(char *msg)
+{
+	perror(msg);
+	exit(EXIT_FAILURE);
 }

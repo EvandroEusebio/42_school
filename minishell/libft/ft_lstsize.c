@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akudiezo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/04 14:45:29 by akudiezo          #+#    #+#             */
-/*   Updated: 2026/03/04 14:47:52 by akudiezo         ###   ########.fr       */
+/*   Created: 2026/02/20 19:08:58 by akudiezo          #+#    #+#             */
+/*   Updated: 2026/02/20 19:09:04 by akudiezo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strcmp(const char *s1, const char *s2)
+int	ft_lstsize(t_list *lst)
 {
-	int	i;
-
-	i = 0;
-	while (s1[i] && s2[i] && s1[i] == s2[i])
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	int	size;
+	
+	size = 0;
+	while (lst)
+	{
+		size++;
+		lst = lst->next;
+	}
+	return (size);
 }

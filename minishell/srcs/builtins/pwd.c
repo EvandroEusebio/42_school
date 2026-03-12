@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akudiezo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/04 14:45:29 by akudiezo          #+#    #+#             */
-/*   Updated: 2026/03/04 14:47:52 by akudiezo         ###   ########.fr       */
+/*   Created: 2026/01/28 17:00:13 by akudiezo          #+#    #+#             */
+/*   Updated: 2026/01/28 17:01:00 by akudiezo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "./../../minishell.h"
 
-int	ft_strcmp(const char *s1, const char *s2)
+
+int	builtin_pwd(void)
 {
-	int	i;
-
-	i = 0;
-	while (s1[i] && s2[i] && s1[i] == s2[i])
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	char	cwd[1024];
+	
+	if (getcwd(cwd, sizeof(cwd)))
+	{
+		printf("%s\n", cwd);
+		return (0);
+	}
+	perror("pwd");
+	return (1);
 }

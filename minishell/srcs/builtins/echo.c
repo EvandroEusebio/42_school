@@ -1,23 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akudiezo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/04 14:45:29 by akudiezo          #+#    #+#             */
-/*   Updated: 2026/03/04 14:47:52 by akudiezo         ###   ########.fr       */
+/*   Created: 2026/01/28 17:00:13 by akudiezo          #+#    #+#             */
+/*   Updated: 2026/01/28 17:01:00 by akudiezo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "./../../minishell.h"
 
-int	ft_strcmp(const char *s1, const char *s2)
+int	builtin_echo(t_command *cmd)
 {
 	int	i;
+	int	newline;
+	
+	newline = 1;
+	i = 1;
 
-	i = 0;
-	while (s1[i] && s2[i] && s1[i] == s2[i])
+	// Verificar opção -n
+	if (cmd->args[1] && ft_strcmp(cmd->args[1], "-n") == 0)
+	{
+		newline = 0;
+		i = 2;
+	}
+	
+	// Imprimir argumentos
+	while (cmd->args[i])
+	{
+		printf("%s", cmd->args[i]);
+		if (cmd->args[i + 1])	
+			printf(" ");
 		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	}
+	
+	if (newline)
+		printf("\n");
+	return (0);
 }

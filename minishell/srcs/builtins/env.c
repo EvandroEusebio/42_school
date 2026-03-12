@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akudiezo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ieusebio <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/04 14:45:29 by akudiezo          #+#    #+#             */
-/*   Updated: 2026/03/04 14:47:52 by akudiezo         ###   ########.fr       */
+/*   Created: 2026/03/04 15:15:40 by ieusebio          #+#    #+#             */
+/*   Updated: 2026/03/04 15:15:41 by ieusebio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 
-int	ft_strcmp(const char *s1, const char *s2)
+#include "./../../minishell.h"
+
+int	builtin_env(char **env)
 {
 	int	i;
-
+	
 	i = 0;
-	while (s1[i] && s2[i] && s1[i] == s2[i])
+	while (env[i])
+	{
+		printf("%s\n", env[i]);
 		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	}
+	return (0);
 }
