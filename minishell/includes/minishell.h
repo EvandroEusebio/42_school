@@ -35,6 +35,7 @@ extern t_shell g_shell;
 // BUILTINS
 int     builtin_echo(char **args);
 int     builtin_pwd(void);
+int     builtin_cd(char **args);
 //int     builtin_env(t_env *env);
 int     builtin_env();
 t_env   *create_env_list(char **envp);
