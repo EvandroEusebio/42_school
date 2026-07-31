@@ -9,17 +9,19 @@ int main()
     PhoneBook myPhoneBook;
     while (loop == 0)
     {
+        std::cout << "=================================" << std::endl;
         std::cout << "Choose options" << std::endl;
-        std::cin >> option;
         std::cout << "0 -> ADD\n1 -> SEARCH\n2-> EXIT" << std::endl;
+        std::cin >> option;
 
         switch (option)
         {
         case 0:
+            std::cout << "=================================" << std::endl;
             myPhoneBook.addContact();
             break;
         case 1:
-            //myPhoneBook.searchContact();
+            myPhoneBook.searchContact();
             break;
         case 2:
             loop = 1;

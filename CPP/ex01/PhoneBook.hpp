@@ -6,9 +6,10 @@
 
 class PhoneBook{
     public:
-        int total_contacts = 0;
+        static size_t total_contacts;
         void addContact();
-        //void searchContact();
+        void searchContact();
+        void showContacts();
 
     private:
         Contact _contacts[8];
